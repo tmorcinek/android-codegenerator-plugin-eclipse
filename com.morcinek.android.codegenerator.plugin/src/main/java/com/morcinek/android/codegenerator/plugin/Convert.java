@@ -1,5 +1,13 @@
 package com.morcinek.android.codegenerator.plugin;
 
+import java.io.InputStream;
+
+import com.morcinek.android.codegenerator.CodeGenerator;
+import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
+import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
+import com.morcinek.android.codegenerator.writer.CodeWriter;
+import com.morcinek.android.codegenerator.writer.providers.ResourceProvidersFactory;
+import com.morcinek.android.codegenerator.writer.templates.ResourceTemplatesProvider;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,15 +29,22 @@ public class Convert extends AbstractHandler {
         try {
             Object firstElement = selection.getFirstElement();
             IFile resource = (IFile) firstElement;
-//            InputStream fileContents = resource.getContents();
+            InputStream fileContents = resource.getContents();
 
+            CodeGenerator codeGenerator = createCodeGenerator();
+
+            String string = codeGenerator.produceCode(fileContents, resource.getName());
             IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(arg0);
-            MessageDialog.openInformation(window.getShell(), "Selected Project", resource.getFullPath().toOSString());
+            MessageDialog.openInformation(window.getShell(), "Selected Project", string);
         } catch (Exception e) {
             e.printStackTrace();
             showErrorMessage(e);
         }
         return null;
+    }
+
+    private CodeGenerator createCodeGenerator() {
+        return new CodeGenerator(XMLResourceExtractor.createResourceExtractor(), new FileNameExtractor(), new CodeWriter(new ResourceProvidersFactory(), new ResourceTemplatesProvider()));
     }
 
     private void showErrorMessage(Exception e) {

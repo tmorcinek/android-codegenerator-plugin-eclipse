@@ -14,7 +14,8 @@ Import-Package:
  org.eclipse.core.resources
 Export-Package: com.morcinek.android.codegenerator.plugin
 Bundle-ClassPath: .,
- jsr173_api-1.0.jar,
- activation-1.1.jar,
+ guava-18.0.jar,
+ commons-lang3-3.2.2.jar,
+ codegenerator-library-1.0.1.jar,
  servlet-api-2.5.jar,
  org.osgi.foundation-1.2.0.jar
