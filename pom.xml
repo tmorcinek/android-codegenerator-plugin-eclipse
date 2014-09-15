@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.morcinek.android.codegenerator</groupId>
-	<artifactId>codegenerator-plugin-eclipse</artifactId>
-	<version>2.0.0</version>
-	<packaging>pom</packaging>
-	<name>Android Code Generator</name>
-	<modules>
-		<module>com.morcinek.android.codegenerator.plugin</module>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.morcinek.android.codegenerator</groupId>
+    <artifactId>codegenerator-plugin-eclipse</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+    <name>Android Code Generator</name>
+    <modules>
+        <module>com.morcinek.android.codegenerator.plugin</module>
         <module>libs/codegenerator-library</module>
-	</modules>
-	<properties>
-	    <java.version>1.6</java.version>
-		<tycho.version>0.21.0</tycho.version>
+    </modules>
+    <properties>
+        <java.version>1.6</java.version>
+        <tycho.version>0.21.0</tycho.version>
         <kepler.repo.url>http://download.eclipse.org/releases/kepler</kepler.repo.url>
-	</properties>
+    </properties>
 
     <build>
         <plugins>
@@ -75,9 +75,9 @@
             <url>${kepler.repo.url}</url>
             <layout>p2</layout>
         </repository>
-		<repository>
-			<id>maven2</id>
-			<url>http://repo1.maven.org/maven2</url>
-		</repository>
-	</repositories>
+        <repository>
+            <id>maven2</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
 </project>
