@@ -8,6 +8,7 @@
 	<name>Android Code Generator</name>
 	<modules>
 		<module>com.morcinek.android.codegenerator.plugin</module>
+        <module>libs/codegenerator-library</module>
 	</modules>
 	<properties>
 	    <java.version>1.6</java.version>
