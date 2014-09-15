@@ -1,0 +1,3 @@
+[submodule "libs/codegenerator-library"]
+	path = libs/codegenerator-library
+	url = git@github.com:tmorcinek/codegenerator-library.git
