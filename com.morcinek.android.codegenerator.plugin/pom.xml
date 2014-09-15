@@ -6,7 +6,7 @@
 	<name>plugin</name>
 	<parent>
 		<groupId>com.morcinek.android.codegenerator</groupId>
-		<artifactId>codegenerator-eclipse</artifactId>
+		<artifactId>codegenerator-plugin-eclipse</artifactId>
 		<version>2.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
