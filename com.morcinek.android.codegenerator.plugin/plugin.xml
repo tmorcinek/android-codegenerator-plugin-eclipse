@@ -2,27 +2,28 @@
 <plugin>
     <extension point="org.eclipse.ui.menus">
         <menuContribution locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
-            <command commandId="com.morcinek.android.codegenerator.plugin.convert"
-                     label="Android Code Generator"
-                     style="push">
-                <visibleWhen
-                        checkEnabled="false">
-                    <and>
-                        <count value="1"/>
-                        <with
-                                variable="activeMenuSelection">
-                            <iterate
-                                    ifEmpty="true"
-                                    operator="and">
-                                <adapt type="org.eclipse.core.resources.IFile">
-                                    <test property="org.eclipse.core.resources.name"
-                                          value="*.xml"/>
-                                </adapt>
-                            </iterate>
-                        </with>
-                    </and>
-                </visibleWhen>
-            </command>
+            <menu label="Generate Android Code">
+                <command commandId="com.morcinek.android.codegenerator.plugin.convert"
+                         label="Activity"
+                         style="push">
+                    <visibleWhen
+                            checkEnabled="false">
+                        <and>
+                            <count value="1"/>
+                            <with
+                                    variable="activeMenuSelection">
+                                <iterate
+                                        ifEmpty="false">
+                                    <adapt type="org.eclipse.core.resources.IFile">
+                                        <test property="org.eclipse.core.resources.name"
+                                              value="*.xml"/>
+                                    </adapt>
+                                </iterate>
+                            </with>
+                        </and>
+                    </visibleWhen>
+                </command>
+            </menu>
         </menuContribution>
     </extension>
 
