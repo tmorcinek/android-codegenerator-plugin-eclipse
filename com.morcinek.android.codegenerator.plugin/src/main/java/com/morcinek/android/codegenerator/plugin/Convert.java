@@ -6,6 +6,7 @@ import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
 import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
 import com.morcinek.android.codegenerator.plugin.editor.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
+import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
 import com.morcinek.android.codegenerator.writer.CodeWriter;
 import com.morcinek.android.codegenerator.writer.providers.ResourceProvidersFactory;
 import com.morcinek.android.codegenerator.writer.templates.ResourceTemplatesProvider;
@@ -35,19 +36,23 @@ import java.io.FileInputStream;
  */
 public class Convert extends AbstractHandler {
 
+    private PreferencesHelper preferencesHelper = Activator.getDefault().getPreferencesHelper();
+
     public Object execute(ExecutionEvent arg0) throws ExecutionException {
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(arg0);
         IFile selectedFile = getResource(selection);
         try {
             final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(arg0);
-
             CodeGenerator codeGenerator = createCodeGenerator();
             String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
-            CodeDialog dialog = new CodeDialog(window.getShell(), "src/main/java", selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
-            if (dialog.open() == IStatus.OK) {
+            CodeDialog dialog = new CodeDialog(window.getShell(), preferencesHelper.getJavaSourcePath(), selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
+            int resultCode = dialog.open();
+            if (resultCode == IStatus.OK) {
+                preferencesHelper.setJavaSourcePath(dialog.getJavaSourcePath());
                 IFile generatedFile = createFileWithGenerateCode(selectedFile, codeGenerator, dialog);
                 IDE.openEditor(window.getActivePage(), generatedFile, true);
-            } else {
+            } else if (resultCode == IStatus.CANCEL) {
+                preferencesHelper.setJavaSourcePath(dialog.getJavaSourcePath());
                 ClipboardHelper.copy(codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode()));
             }
         } catch (Exception e) {

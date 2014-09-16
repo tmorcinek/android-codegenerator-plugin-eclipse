@@ -1,5 +1,6 @@
 package com.morcinek.android.codegenerator.plugin;
 
+import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -18,13 +19,18 @@ public class Activator extends AbstractUIPlugin {
         return plugin;
     }
 
-    public Activator() {
+    private PreferencesHelper preferencesHelper;
 
+    public Activator() {
+    }
+
+    public PreferencesHelper getPreferencesHelper() {
+        return preferencesHelper;
     }
 
     public void start(BundleContext context) throws Exception {
         super.start(context);
-        setupDefaultPreferences();
+        preferencesHelper = new PreferencesHelper(getPreferenceStore());
         plugin = this;
     }
 
@@ -33,11 +39,4 @@ public class Activator extends AbstractUIPlugin {
         super.stop(context);
     }
 
-    private void setupDefaultPreferences() {
-        IPreferenceStore store = getPreferenceStore();
-        store.setDefault(PreferencePage.JAVA_SOURCE_DIRECTORY_PREFERENCE, "src");
-//        TemplatesProvider templatesProvider = new ResourceTemplatesProvider();
-//        String fileTemplate = templatesProvider.provideTemplateForName("File_template");
-//        store.setDefault(PreferencePage.FILE_TEMPLATE_PREFERENCE, fileTemplate);
-    }
 }
