@@ -35,4 +35,13 @@
                  name="Convert">
         </command>
     </extension>
+
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+                name="Android Code Generator"
+                class="com.morcinek.android.codegenerator.plugin.PreferencePage"
+                id="com.morcinek.android.codegenerator.plugin.PreferencePage">
+        </page>
+    </extension>
 </plugin>
