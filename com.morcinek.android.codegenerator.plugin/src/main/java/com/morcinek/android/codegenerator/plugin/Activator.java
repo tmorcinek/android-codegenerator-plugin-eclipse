@@ -1,7 +1,6 @@
 package com.morcinek.android.codegenerator.plugin;
 
 import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -20,9 +19,6 @@ public class Activator extends AbstractUIPlugin {
     }
 
     private PreferencesHelper preferencesHelper;
-
-    public Activator() {
-    }
 
     public PreferencesHelper getPreferencesHelper() {
         return preferencesHelper;

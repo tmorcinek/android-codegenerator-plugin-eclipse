@@ -14,6 +14,10 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
     public PreferencePage() {
         super(GRID);
+    }
+
+    @Override
+    public void init(IWorkbench iWorkbench) {
         setPreferenceStore(Activator.getDefault().getPreferenceStore());
         setDescription("General plugin settings:");
     }
@@ -22,9 +26,5 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
     public void createFieldEditors() {
         addField(new StringFieldEditor(PreferencesHelper.JAVA_SOURCE_PATH_PREFERENCE, "&Directory:", getFieldEditorParent()));
 //        addField(new StringFieldEditor(FILE_TEMPLATE_PREFERENCE, "&File Template:", getFieldEditorParent()));
-    }
-
-    @Override
-    public void init(IWorkbench iWorkbench) {
     }
 }

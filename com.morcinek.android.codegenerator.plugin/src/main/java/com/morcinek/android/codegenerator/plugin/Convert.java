@@ -41,12 +41,11 @@ public class Convert extends AbstractHandler {
             String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
             CodeDialog dialog = new CodeDialog(window.getShell(), preferencesHelper.getJavaSourcePath(), selectedFile.getName(), getPackageName(selectedFile), producedCode);
             int resultCode = dialog.open();
+            preferencesHelper.setJavaSourcePath(dialog.getJavaSourcePath());
             if (resultCode == IStatus.OK) {
-                preferencesHelper.setJavaSourcePath(dialog.getJavaSourcePath());
                 IFile generatedFile = createFileWithGenerateCode(selectedFile, codeGenerator, dialog);
                 IDE.openEditor(window.getActivePage(), generatedFile, true);
-            } else if (resultCode == IStatus.CANCEL) {
-                preferencesHelper.setJavaSourcePath(dialog.getJavaSourcePath());
+            } else {
                 ClipboardHelper.copy(codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode()));
             }
         } catch (Exception exception) {
