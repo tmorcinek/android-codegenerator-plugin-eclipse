@@ -14,8 +14,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -40,9 +42,9 @@ public class Convert extends AbstractHandler {
 
             CodeGenerator codeGenerator = createCodeGenerator();
             String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
-            CodeDialog dialog = new CodeDialog(window.getShell(), selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
+            CodeDialog dialog = new CodeDialog(window.getShell(), "src/main/java", selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
             if (dialog.open() == IStatus.OK) {
-                //TODO
+                createFileWithGenerateCode(selectedFile, codeGenerator, dialog);
             } else {
                 ClipboardHelper.copy(codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode()));
             }
@@ -51,6 +53,21 @@ public class Convert extends AbstractHandler {
             showErrorMessage(e);
         }
         return null;
+    }
+
+    private void createFileWithGenerateCode(IFile selectedFile, CodeGenerator codeGenerator, CodeDialog dialog) throws CoreException {
+        String finalCode = codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode());
+        IFolder folder = selectedFile.getProject().getFolder(dialog.getJavaSourcePath() + "/" + dialog.getGeneratedPackage().replace(".", "/"));
+        createIfNotExist(folder);
+        IFile iFile = folder.getFile(codeGenerator.getJavaFileName(selectedFile.getName()));
+        iFile.create(codeGenerator.getInputStreamFromString(finalCode), false, null);
+    }
+
+    public void createIfNotExist(IFolder folder) throws CoreException {
+        if (!folder.exists()) {
+            createIfNotExist((IFolder) folder.getParent());
+            folder.create(false, false, null);
+        }
     }
 
     private IFile getResource(IStructuredSelection selection) {

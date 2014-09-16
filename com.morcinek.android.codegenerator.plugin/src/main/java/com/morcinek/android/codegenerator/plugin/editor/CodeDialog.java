@@ -14,14 +14,17 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private final String resourceName;
 
+    private String javaSourcePath;
     private String generatedPackage;
     private String generatedCode;
 
+    private Text javaSourcePathText;
     private Text packageText;
     private Text codeText;
 
-    public CodeDialog(Shell parentShell, String resourceName, String generatedPackage, String generatedCode) {
+    public CodeDialog(Shell parentShell, String javaSourcePath, String resourceName, String generatedPackage, String generatedCode) {
         super(parentShell);
+        this.javaSourcePath = javaSourcePath;
         this.resourceName = resourceName;
         this.generatedPackage = generatedPackage;
         this.generatedCode = generatedCode;
@@ -33,6 +36,10 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     public String getGeneratedPackage() {
         return generatedPackage;
+    }
+
+    public String getJavaSourcePath() {
+        return javaSourcePath;
     }
 
     @Override
@@ -48,9 +55,15 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     @Override
     protected Control createDialogArea(Composite parent) {
         Composite area = (Composite) super.createDialogArea(parent);
-        createPackageSection(createGridComposite(area));
+
+        Composite gridComposite = createGridComposite(area);
+        createJavaSourcePathSection(gridComposite);
+        createPackageSection(gridComposite);
+
         createTextSection(area);
+
         createButtons(createGridComposite(area));
+
         return area;
     }
 
@@ -69,6 +82,7 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     private void saveInput() {
         generatedPackage = packageText.getText();
         generatedCode = codeText.getText();
+        javaSourcePath = javaSourcePathText.getText();
     }
 
     private void createButtons(Composite gridComposite) {
@@ -98,6 +112,13 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         container.setLayout(new GridLayout(2, false));
         return container;
+    }
+
+    private void createJavaSourcePathSection(Composite container) {
+        new Label(container, SWT.NONE).setText("Java Source Path");
+        javaSourcePathText = new Text(container, SWT.BORDER);
+        javaSourcePathText.setLayoutData(getGridData());
+        javaSourcePathText.setText(javaSourcePath);
     }
 
     private void createPackageSection(Composite container) {
