@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.ide.IDE;
 
 import java.io.FileInputStream;
 
@@ -44,7 +45,8 @@ public class Convert extends AbstractHandler {
             String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
             CodeDialog dialog = new CodeDialog(window.getShell(), "src/main/java", selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
             if (dialog.open() == IStatus.OK) {
-                createFileWithGenerateCode(selectedFile, codeGenerator, dialog);
+                IFile generatedFile = createFileWithGenerateCode(selectedFile, codeGenerator, dialog);
+                IDE.openEditor(window.getActivePage(), generatedFile, true);
             } else {
                 ClipboardHelper.copy(codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode()));
             }
@@ -55,12 +57,13 @@ public class Convert extends AbstractHandler {
         return null;
     }
 
-    private void createFileWithGenerateCode(IFile selectedFile, CodeGenerator codeGenerator, CodeDialog dialog) throws CoreException {
+    private IFile createFileWithGenerateCode(IFile selectedFile, CodeGenerator codeGenerator, CodeDialog dialog) throws CoreException {
         String finalCode = codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode());
         IFolder folder = selectedFile.getProject().getFolder(dialog.getJavaSourcePath() + "/" + dialog.getGeneratedPackage().replace(".", "/"));
         createIfNotExist(folder);
         IFile iFile = folder.getFile(codeGenerator.getJavaFileName(selectedFile.getName()));
         iFile.create(codeGenerator.getInputStreamFromString(finalCode), false, null);
+        return iFile;
     }
 
     public void createIfNotExist(IFolder folder) throws CoreException {
