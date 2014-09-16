@@ -12,36 +12,66 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>libs</outputDirectory>
+                            <includeArtifactIds>codegenerator-library</includeArtifactIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>com.morcinek.android.codegenerator</groupId>
             <artifactId>codegenerator-library</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jface</groupId>
             <artifactId>text</artifactId>
             <version>3.3.0-v20070606-0010</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.ui</groupId>
             <artifactId>workbench</artifactId>
             <version>3.3.0-I20070608-1100</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.core</groupId>
             <artifactId>org.eclipse.core.resources</artifactId>
             <version>3.6.0.v20100526-0737</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.swt.win32.win32</groupId>
             <artifactId>x86</artifactId>
             <version>3.3.0-v3346</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.core</groupId>
             <artifactId>org.eclipse.core.runtime</artifactId>
             <version>3.6.0.v20100505</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
