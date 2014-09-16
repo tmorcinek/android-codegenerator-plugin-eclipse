@@ -1,7 +1,6 @@
 package com.morcinek.android.codegenerator.plugin;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
-import com.morcinek.android.codegenerator.extractor.PackageExtractor;
 import com.morcinek.android.codegenerator.extractor.XMLPackageExtractor;
 import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
 import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
@@ -26,7 +25,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 
 /**
@@ -36,28 +34,28 @@ public class Convert extends AbstractHandler {
 
     public Object execute(ExecutionEvent arg0) throws ExecutionException {
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(arg0);
+        IFile selectedFile = getResource(selection);
         try {
-            Object firstElement = selection.getFirstElement();
-            IFile resource = (IFile) firstElement;
-            InputStream fileContents = resource.getContents();
-
-            CodeGenerator codeGenerator = createCodeGenerator();
-
-            String string = codeGenerator.produceCode(fileContents, resource.getName());
             final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(arg0);
 
-            String packageName = getPackageName(getRootPath(selection));
-            CodeDialog dialog = new CodeDialog(window.getShell(), resource.getName(), packageName, string);// new input dialog
+            CodeGenerator codeGenerator = createCodeGenerator();
+            String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
+            CodeDialog dialog = new CodeDialog(window.getShell(), selectedFile.getName(), getPackageName(getRootPath(selection)), producedCode);
             if (dialog.open() == IStatus.OK) {
                 //TODO
             } else {
-                ClipboardHelper.copy(dialog.getGeneratedCode());
+                ClipboardHelper.copy(codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode()));
             }
         } catch (Exception e) {
             e.printStackTrace();
             showErrorMessage(e);
         }
         return null;
+    }
+
+    private IFile getResource(IStructuredSelection selection) {
+        Object firstElement = selection.getFirstElement();
+        return (IFile) firstElement;
     }
 
     private CodeGenerator createCodeGenerator() {
