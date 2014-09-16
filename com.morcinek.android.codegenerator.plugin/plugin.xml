@@ -17,6 +17,8 @@
                                     <adapt type="org.eclipse.core.resources.IFile">
                                         <test property="org.eclipse.core.resources.name"
                                               value="*.xml"/>
+                                        <test property="org.eclipse.core.resources.path"
+                                              value="*layout*"/>
                                     </adapt>
                                 </iterate>
                             </with>
