@@ -2,7 +2,7 @@ package com.morcinek.android.codegenerator.plugin.handlers;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
 import com.morcinek.android.codegenerator.codegeneration.TemplateCodeGenerator;
-import com.morcinek.android.codegenerator.codegeneration.providers.factories.ResourceProvidersFactory;
+import com.morcinek.android.codegenerator.codegeneration.providers.ResourceProvidersFactory;
 import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTemplatesProvider;
 import com.morcinek.android.codegenerator.extractor.PackageExtractor;
 import com.morcinek.android.codegenerator.extractor.XMLPackageExtractor;
