@@ -15,8 +15,9 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     private final String resourceName;
 
     private String sourcePath;
-    private String generatedPackage;
-    private String generatedCode;
+    private String packageName;
+    private String code;
+    private boolean hideCreateFileButton;
 
     private Text sourcePathText;
     private Text packageText;
@@ -36,12 +37,17 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         }
 
         public Builder setPackage(String packageName) {
-            codeDialog.generatedPackage = packageName;
+            codeDialog.packageName = packageName;
             return this;
         }
 
         public Builder setCode(String code) {
-            codeDialog.generatedCode = code;
+            codeDialog.code = code;
+            return this;
+        }
+
+        public Builder hideCreateFileButton() {
+            codeDialog.hideCreateFileButton = true;
             return this;
         }
 
@@ -70,10 +76,14 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         Composite area = (Composite) super.createDialogArea(parent);
 
         Composite gridComposite = createGridComposite(area);
-        sourcePathText = createTextSection(gridComposite, "Java Source Path", sourcePath);
-        packageText = createTextSection(gridComposite, "Package", generatedPackage);
+        if (sourcePath != null) {
+            sourcePathText = createTextSection(gridComposite, "Java Source Path", sourcePath);
+        }
+        if (packageName != null) {
+            packageText = createTextSection(gridComposite, "Package", packageName);
+        }
 
-        codeText = createText(area, generatedCode);
+        codeText = createText(area, code);
 
         createButtons(createGridComposite(area));
         return area;
@@ -86,12 +96,14 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
                 cancelPressed();
             }
         });
-        createButton(gridComposite, "Create File", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                okPressed();
-            }
-        });
+        if (!hideCreateFileButton) {
+            createButton(gridComposite, "Create File", new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    okPressed();
+                }
+            });
+        }
     }
 
     private Text createTextSection(Composite container, String label, String defaultText) {
@@ -99,12 +111,12 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         return createText(container, defaultText);
     }
 
-    public String getGeneratedCode() {
-        return generatedCode;
+    public String getCode() {
+        return code;
     }
 
-    public String getGeneratedPackage() {
-        return generatedPackage;
+    public String getPackageName() {
+        return packageName;
     }
 
     public String getSourcePath() {
@@ -124,8 +136,8 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     }
 
     private void saveInput() {
-        generatedPackage = packageText.getText();
-        generatedCode = codeText.getText();
+        packageName = packageText.getText();
+        code = codeText.getText();
         sourcePath = sourcePathText.getText();
     }
 

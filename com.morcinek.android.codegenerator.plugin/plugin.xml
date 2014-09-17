@@ -47,6 +47,28 @@
                         </and>
                     </visibleWhen>
                 </command>
+                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
+                         label="Menu"
+                         style="push">
+                    <visibleWhen
+                            checkEnabled="false">
+                        <and>
+                            <count value="1"/>
+                            <with
+                                    variable="activeMenuSelection">
+                                <iterate
+                                        ifEmpty="false">
+                                    <adapt type="org.eclipse.core.resources.IFile">
+                                        <test property="org.eclipse.core.resources.name"
+                                              value="*.xml"/>
+                                        <test property="org.eclipse.core.resources.path"
+                                              value="*menu*"/>
+                                    </adapt>
+                                </iterate>
+                            </with>
+                        </and>
+                    </visibleWhen>
+                </command>
             </menu>
         </menuContribution>
     </extension>
@@ -54,7 +76,7 @@
     <extension point="org.eclipse.ui.commands">
         <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
                  id="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
-                 name="Convert">
+                 name="ActivityHandler">
         </command>
     </extension>
 
@@ -62,6 +84,13 @@
         <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
                  id="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
                  name="AdapterHandler">
+        </command>
+    </extension>
+
+    <extension point="org.eclipse.ui.commands">
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
+                 id="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
+                 name="MenuHandler">
         </command>
     </extension>
 
