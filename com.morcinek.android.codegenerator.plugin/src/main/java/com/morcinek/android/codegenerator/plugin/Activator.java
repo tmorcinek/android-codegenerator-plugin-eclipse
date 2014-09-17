@@ -1,5 +1,11 @@
 package com.morcinek.android.codegenerator.plugin;
 
+import com.morcinek.android.codegenerator.CodeGenerator;
+import com.morcinek.android.codegenerator.codegeneration.TemplateCodeGenerator;
+import com.morcinek.android.codegenerator.codegeneration.providers.ResourceProvidersFactory;
+import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTemplatesProvider;
+import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
+import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
 import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -18,15 +24,8 @@ public class Activator extends AbstractUIPlugin {
         return plugin;
     }
 
-    private PreferencesHelper preferencesHelper;
-
-    public PreferencesHelper getPreferencesHelper() {
-        return preferencesHelper;
-    }
-
     public void start(BundleContext context) throws Exception {
         super.start(context);
-        preferencesHelper = new PreferencesHelper(getPreferenceStore());
         plugin = this;
     }
 
@@ -35,4 +34,13 @@ public class Activator extends AbstractUIPlugin {
         super.stop(context);
     }
 
+    public PreferencesHelper createPreferenceHelper() {
+        return new PreferencesHelper(getPreferenceStore());
+    }
+
+    public CodeGenerator createCodeGenerator(String templateName, ResourceProvidersFactory resourceProvidersFactory) {
+        return new CodeGenerator(XMLResourceExtractor.createResourceExtractor(),
+                new FileNameExtractor(),
+                new TemplateCodeGenerator(templateName, resourceProvidersFactory, new ResourceTemplatesProvider()));
+    }
 }

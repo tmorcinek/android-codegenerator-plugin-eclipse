@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.editor;
+package com.morcinek.android.codegenerator.plugin.eclipse;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -14,17 +14,17 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private final String resourceName;
 
-    private String javaSourcePath;
+    private String sourcePath;
     private String generatedPackage;
     private String generatedCode;
 
-    private Text javaSourcePathText;
+    private Text sourcePathText;
     private Text packageText;
     private Text codeText;
 
-    public CodeDialog(Shell parentShell, String javaSourcePath, String resourceName, String generatedPackage, String generatedCode) {
+    public CodeDialog(Shell parentShell, String sourcePath, String resourceName, String generatedPackage, String generatedCode) {
         super(parentShell);
-        this.javaSourcePath = javaSourcePath;
+        this.sourcePath = sourcePath;
         this.resourceName = resourceName;
         this.generatedPackage = generatedPackage;
         this.generatedCode = generatedCode;
@@ -38,8 +38,8 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         return generatedPackage;
     }
 
-    public String getJavaSourcePath() {
-        return javaSourcePath;
+    public String getSourcePath() {
+        return sourcePath;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     private void saveInput() {
         generatedPackage = packageText.getText();
         generatedCode = codeText.getText();
-        javaSourcePath = javaSourcePathText.getText();
+        sourcePath = sourcePathText.getText();
     }
 
     private void createButtons(Composite gridComposite) {
@@ -116,9 +116,9 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private void createJavaSourcePathSection(Composite container) {
         new Label(container, SWT.NONE).setText("Java Source Path");
-        javaSourcePathText = new Text(container, SWT.BORDER);
-        javaSourcePathText.setLayoutData(getGridData());
-        javaSourcePathText.setText(javaSourcePath);
+        sourcePathText = new Text(container, SWT.BORDER);
+        sourcePathText.setLayoutData(getGridData());
+        sourcePathText.setText(sourcePath);
     }
 
     private void createPackageSection(Composite container) {
