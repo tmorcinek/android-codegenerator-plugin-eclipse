@@ -22,24 +22,37 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
     private Text packageText;
     private Text codeText;
 
-    public CodeDialog(Shell parentShell, String sourcePath, String resourceName, String generatedPackage, String generatedCode) {
+    public static class Builder {
+
+        private CodeDialog codeDialog;
+
+        public Builder(Shell parentShell, String resourceName) {
+            codeDialog = new CodeDialog(parentShell, resourceName);
+        }
+
+        public Builder setSourcePath(String sourcePath) {
+            codeDialog.sourcePath = sourcePath;
+            return this;
+        }
+
+        public Builder setPackage(String packageName) {
+            codeDialog.generatedPackage = packageName;
+            return this;
+        }
+
+        public Builder setCode(String code) {
+            codeDialog.generatedCode = code;
+            return this;
+        }
+
+        public CodeDialog create() {
+            return codeDialog;
+        }
+    }
+
+    public CodeDialog(Shell parentShell, String resourceName) {
         super(parentShell);
-        this.sourcePath = sourcePath;
         this.resourceName = resourceName;
-        this.generatedPackage = generatedPackage;
-        this.generatedCode = generatedCode;
-    }
-
-    public String getGeneratedCode() {
-        return generatedCode;
-    }
-
-    public String getGeneratedPackage() {
-        return generatedPackage;
-    }
-
-    public String getSourcePath() {
-        return sourcePath;
     }
 
     @Override
@@ -57,14 +70,45 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         Composite area = (Composite) super.createDialogArea(parent);
 
         Composite gridComposite = createGridComposite(area);
-        createJavaSourcePathSection(gridComposite);
-        createPackageSection(gridComposite);
+        sourcePathText = createTextSection(gridComposite, "Java Source Path", sourcePath);
+        packageText = createTextSection(gridComposite, "Package", generatedPackage);
 
-        createTextSection(area);
+        codeText = createText(area, generatedCode);
 
         createButtons(createGridComposite(area));
-
         return area;
+    }
+
+    private void createButtons(Composite gridComposite) {
+        createButton(gridComposite, "Copy Code To Clipboard", new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                cancelPressed();
+            }
+        });
+        createButton(gridComposite, "Create File", new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                okPressed();
+            }
+        });
+    }
+
+    private Text createTextSection(Composite container, String label, String defaultText) {
+        createLabel(container, label);
+        return createText(container, defaultText);
+    }
+
+    public String getGeneratedCode() {
+        return generatedCode;
+    }
+
+    public String getGeneratedPackage() {
+        return generatedPackage;
+    }
+
+    public String getSourcePath() {
+        return sourcePath;
     }
 
     @Override
@@ -85,26 +129,18 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         sourcePath = sourcePathText.getText();
     }
 
-    private void createButtons(Composite gridComposite) {
-        createButton(gridComposite, "Copy Code To Clipboard", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                cancelPressed();
-            }
-        });
-        createButton(gridComposite, "Create File", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                okPressed();
-            }
-        });
-    }
-
     private void createButton(Composite gridComposite, String text, SelectionAdapter listener) {
         Button button = new Button(gridComposite, SWT.BORDER);
         button.setLayoutData(getGridData());
         button.setText(text);
         button.addSelectionListener(listener);
+    }
+
+    private Text createText(Composite container, String defaultText) {
+        Text text = new Text(container, SWT.BORDER);
+        text.setLayoutData(getGridData());
+        text.setText(defaultText);
+        return text;
     }
 
     private Composite createGridComposite(Composite area) {
@@ -114,24 +150,8 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         return container;
     }
 
-    private void createJavaSourcePathSection(Composite container) {
-        new Label(container, SWT.NONE).setText("Java Source Path");
-        sourcePathText = new Text(container, SWT.BORDER);
-        sourcePathText.setLayoutData(getGridData());
-        sourcePathText.setText(sourcePath);
-    }
-
-    private void createPackageSection(Composite container) {
-        new Label(container, SWT.NONE).setText("Package");
-        packageText = new Text(container, SWT.BORDER);
-        packageText.setLayoutData(getGridData());
-        packageText.setText(generatedPackage);
-    }
-
-    private void createTextSection(Composite container) {
-        codeText = new Text(container, SWT.BORDER);
-        codeText.setLayoutData(getGridData());
-        codeText.setText(generatedCode);
+    private void createLabel(Composite container, String text) {
+        new Label(container, SWT.NONE).setText(text);
     }
 
     private GridData getGridData() {

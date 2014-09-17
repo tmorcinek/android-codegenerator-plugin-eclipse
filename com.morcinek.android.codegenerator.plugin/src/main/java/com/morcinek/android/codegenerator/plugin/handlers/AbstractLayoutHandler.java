@@ -14,9 +14,15 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.ide.IDE;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.IOException;
 
 /**
  * Copyright 2014 Tomasz Morcinek. All rights reserved.
@@ -38,10 +44,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         final IFile selectedFile = environmentHelper.getSelectedFile(executionEvent);
         final IWorkbenchWindow window = environmentHelper.getActiveWindow(executionEvent);
         try {
-            CodeGenerator codeGenerator = Activator.getDefault().createCodeGenerator(getTemplateName(), new AdapterResourceProvidersFactory());
-            String producedCode = codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
-
-            CodeDialog dialog = new CodeDialog(window.getShell(), preferencesHelper.getSourcePath(), selectedFile.getName(), packageNameHelper.getPackageName(selectedFile), producedCode);
+            CodeDialog dialog = createCodeDialog(selectedFile, window, getGeneratedCode(selectedFile));
             int resultCode = dialog.open();
             preferencesHelper.setSourcePath(dialog.getSourcePath());
             String packageName = dialog.getGeneratedPackage();
@@ -61,6 +64,19 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
             errorHandler.handleError(exception);
         }
         return null;
+    }
+
+    private String getGeneratedCode(IFile selectedFile) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, CoreException {
+        CodeGenerator codeGenerator = Activator.getDefault().createCodeGenerator(getTemplateName(), new AdapterResourceProvidersFactory());
+        return codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
+    }
+
+    private CodeDialog createCodeDialog(IFile selectedFile, IWorkbenchWindow window, String producedCode) {
+        CodeDialog.Builder builder = new CodeDialog.Builder(window.getShell(), selectedFile.getName());
+        builder.setCode(producedCode);
+        builder.setPackage(packageNameHelper.getPackageName(selectedFile));
+        builder.setSourcePath(preferencesHelper.getSourcePath());
+        return builder.create();
     }
 
     protected abstract String getTemplateName();
