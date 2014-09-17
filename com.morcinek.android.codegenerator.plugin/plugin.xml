@@ -3,8 +3,30 @@
     <extension point="org.eclipse.ui.menus">
         <menuContribution locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
             <menu label="Generate Android Code">
-                <command commandId="com.morcinek.android.codegenerator.plugin.convert"
+                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
                          label="Activity"
+                         style="push">
+                    <visibleWhen
+                            checkEnabled="false">
+                        <and>
+                            <count value="1"/>
+                            <with
+                                    variable="activeMenuSelection">
+                                <iterate
+                                        ifEmpty="false">
+                                    <adapt type="org.eclipse.core.resources.IFile">
+                                        <test property="org.eclipse.core.resources.name"
+                                              value="*.xml"/>
+                                        <test property="org.eclipse.core.resources.path"
+                                              value="*layout*"/>
+                                    </adapt>
+                                </iterate>
+                            </with>
+                        </and>
+                    </visibleWhen>
+                </command>
+                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
+                         label="Adapter"
                          style="push">
                     <visibleWhen
                             checkEnabled="false">
@@ -30,9 +52,16 @@
     </extension>
 
     <extension point="org.eclipse.ui.commands">
-        <command defaultHandler="com.morcinek.android.codegenerator.plugin.Convert"
-                 id="com.morcinek.android.codegenerator.plugin.convert"
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
+                 id="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
                  name="Convert">
+        </command>
+    </extension>
+
+    <extension point="org.eclipse.ui.commands">
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
+                 id="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
+                 name="AdapterHandler">
         </command>
     </extension>
 
