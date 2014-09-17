@@ -8,7 +8,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 public class PreferencesHelper {
 
     public static final String JAVA_SOURCE_PATH_PREFERENCE = "directoryPreference";
-    public static final String FILE_TEMPLATE_PREFERENCE = "File_template";
+    public static final String FILE_TEMPLATE_PREFERENCE = "Activity_template";
 
     private final IPreferenceStore preferenceStore;
 
@@ -20,7 +20,7 @@ public class PreferencesHelper {
     private void setupDefaults() {
         preferenceStore.setDefault(JAVA_SOURCE_PATH_PREFERENCE, "src");
 //        TemplatesProvider templatesProvider = new ResourceTemplatesProvider();
-//        String fileTemplate = templatesProvider.provideTemplateForName("File_template");
+//        String fileTemplate = templatesProvider.provideTemplateForName("Activity_template");
 //        store.setDefault(PreferencePage.FILE_TEMPLATE_PREFERENCE, fileTemplate);
     }
 

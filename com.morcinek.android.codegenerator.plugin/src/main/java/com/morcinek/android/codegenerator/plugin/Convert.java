@@ -1,6 +1,9 @@
 package com.morcinek.android.codegenerator.plugin;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
+import com.morcinek.android.codegenerator.codegeneration.TemplateCodeGenerator;
+import com.morcinek.android.codegenerator.codegeneration.providers.factories.ActivityResourceProvidersFactory;
+import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTemplatesProvider;
 import com.morcinek.android.codegenerator.extractor.XMLPackageExtractor;
 import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
 import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
@@ -8,9 +11,6 @@ import com.morcinek.android.codegenerator.plugin.editor.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
-import com.morcinek.android.codegenerator.writer.CodeWriter;
-import com.morcinek.android.codegenerator.writer.providers.ResourceProvidersFactory;
-import com.morcinek.android.codegenerator.writer.templates.ResourceTemplatesProvider;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -63,7 +63,7 @@ public class Convert extends AbstractHandler {
         String finalCode = codeGenerator.appendPackage(dialog.getGeneratedPackage(), dialog.getGeneratedCode());
         IFolder folder = selectedFile.getProject().getFolder(dialog.getJavaSourcePath() + "/" + dialog.getGeneratedPackage().replace(".", "/"));
         createIfNotExist(folder);
-        IFile iFile = folder.getFile(codeGenerator.getJavaFileName(selectedFile.getName()));
+        IFile iFile = folder.getFile(codeGenerator.getJavaFileName(selectedFile.getName(), "Activity"));
         iFile.create(codeGenerator.getInputStreamFromString(finalCode), false, null);
         return iFile;
     }
@@ -76,7 +76,7 @@ public class Convert extends AbstractHandler {
     }
 
     private CodeGenerator createCodeGenerator() {
-        return new CodeGenerator(XMLResourceExtractor.createResourceExtractor(), new FileNameExtractor(), new CodeWriter(new ResourceProvidersFactory(), new ResourceTemplatesProvider()));
+        return new CodeGenerator(XMLResourceExtractor.createResourceExtractor(), new FileNameExtractor(), new TemplateCodeGenerator("Activity_template", new ActivityResourceProvidersFactory(), new ResourceTemplatesProvider()));
     }
 
     private String getPackageName(IFile selectedFile) {
