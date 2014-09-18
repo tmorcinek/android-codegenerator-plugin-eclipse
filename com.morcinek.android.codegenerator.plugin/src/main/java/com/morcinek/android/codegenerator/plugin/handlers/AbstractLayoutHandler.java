@@ -39,7 +39,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
 
     private final PathHelper pathHelper = new PathHelper();
 
-    private final PreferenceHelper preferencesHelper = Activator.getDefault().createPreferenceHelper();
+    private final PreferenceHelper preferenceHelper = Activator.getDefault().createPreferenceHelper();
 
     @Override
     public Object execute(ExecutionEvent executionEvent) throws ExecutionException {
@@ -62,7 +62,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
                         ClipboardHelper.copy(finalCode);
                         break;
                     default:
-                        preferencesHelper.setSourcePath(bundle.getSourcePath());
+                        preferenceHelper.setSourcePath(bundle.getSourcePath());
                         break;
                 }
             }
@@ -81,7 +81,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         CodeDialogBundle bundle = new CodeDialogBundle();
         bundle.setCode(producedCode);
         bundle.setPackage(packageHelper.getPackageName(selectedFile));
-        bundle.setSourcePath(preferencesHelper.getSourcePath());
+        bundle.setSourcePath(preferenceHelper.getSourcePath());
         return new CodeDialog(shell, bundle);
     }
 

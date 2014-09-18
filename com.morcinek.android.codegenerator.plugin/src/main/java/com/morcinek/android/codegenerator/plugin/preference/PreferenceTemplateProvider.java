@@ -8,12 +8,12 @@ import com.morcinek.android.codegenerator.plugin.Activator;
  */
 public class PreferenceTemplateProvider extends ResourceTemplatesProvider {
 
-    private final PreferenceHelper preferencesHelper = Activator.getDefault().createPreferenceHelper();
+    private final PreferenceHelper preferenceHelper = Activator.getDefault().createPreferenceHelper();
 
     @Override
     public String provideTemplateForName(String templateName) {
-        if (preferencesHelper.containsTemplate(templateName)) {
-            return preferencesHelper.getTemplate(templateName);
+        if (preferenceHelper.containsTemplate(templateName)) {
+            return preferenceHelper.getTemplate(templateName);
         }
         return super.provideTemplateForName(templateName);
     }
