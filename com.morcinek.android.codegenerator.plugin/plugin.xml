@@ -98,8 +98,8 @@
             point="org.eclipse.ui.preferencePages">
         <page
                 name="Android Code Generator"
-                class="com.morcinek.android.codegenerator.plugin.PreferencePage"
-                id="com.morcinek.android.codegenerator.plugin.PreferencePage">
+                class="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"
+                id="com.morcinek.android.codegenerator.plugin.preference.PreferencePage">
         </page>
     </extension>
 </plugin>

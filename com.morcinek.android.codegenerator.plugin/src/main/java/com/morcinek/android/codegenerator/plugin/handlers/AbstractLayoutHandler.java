@@ -10,7 +10,7 @@ import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PackageHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PathHelper;
-import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
+import com.morcinek.android.codegenerator.plugin.preference.PreferenceHelper;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -39,7 +39,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
 
     private final PathHelper pathHelper = new PathHelper();
 
-    private final PreferencesHelper preferencesHelper = Activator.getDefault().createPreferenceHelper();
+    private final PreferenceHelper preferencesHelper = Activator.getDefault().createPreferenceHelper();
 
     @Override
     public Object execute(ExecutionEvent executionEvent) throws ExecutionException {
