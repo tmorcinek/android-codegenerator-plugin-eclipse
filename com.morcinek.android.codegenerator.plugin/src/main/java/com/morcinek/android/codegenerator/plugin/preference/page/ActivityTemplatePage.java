@@ -1,11 +1,11 @@
-package com.morcinek.android.codegenerator.plugin.preference;
+package com.morcinek.android.codegenerator.plugin.preference.page;
 
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 
 
 /**
- * Preference for program used by ContextMenuPlugin
+ * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
 public class ActivityTemplatePage extends AbstractTemplatePage {
 

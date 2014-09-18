@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.preference;
+package com.morcinek.android.codegenerator.plugin.preference.page;
 
 import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTemplatesProvider;
 import com.morcinek.android.codegenerator.codegeneration.templates.TemplatesProvider;

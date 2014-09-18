@@ -1,7 +1,6 @@
-package com.morcinek.android.codegenerator.plugin.preference;
+package com.morcinek.android.codegenerator.plugin.preference.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
-import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.StringFieldEditor;
@@ -10,7 +9,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 
 /**
- * Preference for program used by ContextMenuPlugin
+ * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 

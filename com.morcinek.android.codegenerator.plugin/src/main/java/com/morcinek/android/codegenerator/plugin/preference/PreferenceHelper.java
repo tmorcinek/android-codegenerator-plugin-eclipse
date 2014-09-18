@@ -1,5 +1,6 @@
 package com.morcinek.android.codegenerator.plugin.preference;
 
+import com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
