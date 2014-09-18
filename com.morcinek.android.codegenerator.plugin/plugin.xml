@@ -97,9 +97,23 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+                id="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"
                 name="Android Code Generator"
-                class="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"
-                id="com.morcinek.android.codegenerator.plugin.preference.PreferencePage">
-        </page>
+                class="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"/>
+        <page
+                id="com.morcinek.android.codegenerator.plugin.preference.ActivityTemplatePage"
+                name="Activity Template"
+                class="com.morcinek.android.codegenerator.plugin.preference.ActivityTemplatePage"
+                category="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"/>
+        <page
+                id="com.morcinek.android.codegenerator.plugin.preference.AdapterTemplatePage"
+                name="Adapter Template"
+                class="com.morcinek.android.codegenerator.plugin.preference.AdapterTemplatePage"
+                category="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"/>
+        <page
+                id="com.morcinek.android.codegenerator.plugin.preference.MenuTemplatePage"
+                name="Menu Template"
+                class="com.morcinek.android.codegenerator.plugin.preference.MenuTemplatePage"
+                category="com.morcinek.android.codegenerator.plugin.preference.PreferencePage"/>
     </extension>
 </plugin>
