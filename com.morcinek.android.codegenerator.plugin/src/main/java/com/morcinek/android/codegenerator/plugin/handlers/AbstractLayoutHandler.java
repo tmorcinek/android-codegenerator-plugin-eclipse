@@ -4,6 +4,7 @@ import com.morcinek.android.codegenerator.CodeGenerator;
 import com.morcinek.android.codegenerator.codegeneration.providers.factories.AdapterResourceProvidersFactory;
 import com.morcinek.android.codegenerator.plugin.Activator;
 import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialog;
+import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialogBundle;
 import com.morcinek.android.codegenerator.plugin.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
@@ -16,6 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.ide.IDE;
 import org.xml.sax.SAXException;
@@ -44,21 +46,22 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         final IFile selectedFile = environmentHelper.getSelectedFile(executionEvent);
         final IWorkbenchWindow window = environmentHelper.getActiveWindow(executionEvent);
         try {
-            CodeDialog dialog = createCodeDialog(selectedFile, window, getGeneratedCode(selectedFile));
-            int resultCode = dialog.open();
-            preferencesHelper.setSourcePath(dialog.getSourcePath());
-            String packageName = dialog.getPackageName();
-            String sourcePath = dialog.getSourcePath();
-            String code = dialog.getCode();
-
-            String finalCode = pathHelper.getMergedCodeWithPackage(packageName, code);
-            String fileName = pathHelper.getFileName(selectedFile.getName(), getResourceName());
-            String folderName = pathHelper.getFolderPath(sourcePath, packageName);
-            if (resultCode == IStatus.OK) {
-                IFile generatedFile = environmentHelper.createFileWithGeneratedCode(selectedFile, fileName, folderName, finalCode);
-                IDE.openEditor(window.getActivePage(), generatedFile, true);
-            } else {
-                ClipboardHelper.copy(finalCode);
+            CodeDialog dialog = createCodeDialog(selectedFile, window.getShell(), getGeneratedCode(selectedFile));
+            if (dialog.open() == IStatus.OK) {
+                CodeDialogBundle bundle = dialog.getBundle();
+                preferencesHelper.setSourcePath(bundle.getSourcePath());
+                String finalCode = pathHelper.getMergedCodeWithPackage(bundle.getPackage(), bundle.getCode());
+                String fileName = pathHelper.getFileName(selectedFile.getName(), getResourceName());
+                String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
+                switch (dialog.getReturnValue()) {
+                    case CodeDialog.RETURN_VALUE_CREATE_FILE:
+                        IFile generatedFile = environmentHelper.createFileWithGeneratedCode(selectedFile, fileName, folderName, finalCode);
+                        IDE.openEditor(window.getActivePage(), generatedFile, true);
+                        break;
+                    case CodeDialog.RETURN_VALUE_COPY:
+                        ClipboardHelper.copy(finalCode);
+                        break;
+                }
             }
         } catch (Exception exception) {
             errorHandler.handleError(exception);
@@ -71,12 +74,12 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         return codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
     }
 
-    private CodeDialog createCodeDialog(IFile selectedFile, IWorkbenchWindow window, String producedCode) {
-        CodeDialog.Builder builder = new CodeDialog.Builder(window.getShell(), selectedFile.getName());
-        builder.setCode(producedCode);
-        builder.setPackage(packageNameHelper.getPackageName(selectedFile));
-        builder.setSourcePath(preferencesHelper.getSourcePath());
-        return builder.create();
+    private CodeDialog createCodeDialog(IFile selectedFile, Shell shell, String producedCode) {
+        CodeDialogBundle bundle = new CodeDialogBundle();
+        bundle.setCode(producedCode);
+        bundle.setPackage(packageNameHelper.getPackageName(selectedFile));
+        bundle.setSourcePath(preferencesHelper.getSourcePath());
+        return new CodeDialog(shell, bundle);
     }
 
     protected abstract String getTemplateName();

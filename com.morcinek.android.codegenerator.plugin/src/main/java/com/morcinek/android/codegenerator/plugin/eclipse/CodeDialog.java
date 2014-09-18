@@ -12,59 +12,53 @@ import org.eclipse.swt.widgets.*;
  */
 public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
-    private final String resourceName;
+    public static final int RETURN_VALUE_CREATE_FILE = 1;
+    public static final int RETURN_VALUE_COPY = 2;
 
-    private String sourcePath;
-    private String packageName;
-    private String code;
-    private boolean hideCreateFileButton;
+    private final CodeDialogBundle bundle;
 
     private Text sourcePathText;
     private Text packageText;
     private Text codeText;
 
-    public static class Builder {
+    private int returnValue;
 
-        private CodeDialog codeDialog;
-
-        public Builder(Shell parentShell, String resourceName) {
-            codeDialog = new CodeDialog(parentShell, resourceName);
-        }
-
-        public Builder setSourcePath(String sourcePath) {
-            codeDialog.sourcePath = sourcePath;
-            return this;
-        }
-
-        public Builder setPackage(String packageName) {
-            codeDialog.packageName = packageName;
-            return this;
-        }
-
-        public Builder setCode(String code) {
-            codeDialog.code = code;
-            return this;
-        }
-
-        public Builder hideCreateFileButton() {
-            codeDialog.hideCreateFileButton = true;
-            return this;
-        }
-
-        public CodeDialog create() {
-            return codeDialog;
-        }
+    public CodeDialog(Shell parentShell, CodeDialogBundle bundle) {
+        super(parentShell);
+        this.bundle = bundle;
     }
 
-    public CodeDialog(Shell parentShell, String resourceName) {
-        super(parentShell);
-        this.resourceName = resourceName;
+    public CodeDialogBundle getBundle() {
+        return bundle;
+    }
+
+    public int getReturnValue() {
+        return returnValue;
+    }
+
+    private void okPressed(int returnValue) {
+        this.returnValue = returnValue;
+        saveInput();
+        okPressed();
+    }
+
+    private void saveInput() {
+        bundle.setPackage(getTextValue(packageText));
+        bundle.setCode(getTextValue(codeText));
+        bundle.setSourcePath(getTextValue(sourcePathText));
+    }
+
+    private String getTextValue(Text text) {
+        if (text != null) {
+            return text.getText();
+        }
+        return null;
     }
 
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText(String.format("Code generated from: '%s'", resourceName));
+        newShell.setText(String.format("Code generated from: '%s'", bundle.getResourceName()));
     }
 
     @Override
@@ -76,69 +70,29 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         Composite area = (Composite) super.createDialogArea(parent);
 
         Composite gridComposite = createGridComposite(area);
-        if (sourcePath != null) {
-            sourcePathText = createTextSection(gridComposite, "Java Source Path", sourcePath);
+        if (bundle.getSourcePath() != null) {
+            sourcePathText = createTextSection(gridComposite, "Java Source Path", bundle.getSourcePath());
         }
-        if (packageName != null) {
-            packageText = createTextSection(gridComposite, "Package", packageName);
+        if (bundle.getPackage() != null) {
+            packageText = createTextSection(gridComposite, "Package", bundle.getPackage());
         }
 
-        codeText = createText(area, code);
+        codeText = createText(area, bundle.getCode());
 
         createButtons(createGridComposite(area));
         return area;
     }
 
     private void createButtons(Composite gridComposite) {
-        createButton(gridComposite, "Copy Code To Clipboard", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                cancelPressed();
-            }
-        });
-        if (!hideCreateFileButton) {
-            createButton(gridComposite, "Create File", new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    okPressed();
-                }
-            });
+        createButton(gridComposite, "Copy Code To Clipboard", new DialogSelectionAdapter(RETURN_VALUE_COPY));
+        if (bundle.showCreateFileButton()) {
+            createButton(gridComposite, "Create File", new DialogSelectionAdapter(RETURN_VALUE_CREATE_FILE));
         }
     }
 
     private Text createTextSection(Composite container, String label, String defaultText) {
         createLabel(container, label);
         return createText(container, defaultText);
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public String getSourcePath() {
-        return sourcePath;
-    }
-
-    @Override
-    protected void okPressed() {
-        saveInput();
-        super.okPressed();
-    }
-
-    @Override
-    protected void cancelPressed() {
-        saveInput();
-        super.cancelPressed();
-    }
-
-    private void saveInput() {
-        packageName = packageText.getText();
-        code = codeText.getText();
-        sourcePath = sourcePathText.getText();
     }
 
     private void createButton(Composite gridComposite, String text, SelectionAdapter listener) {
@@ -171,5 +125,19 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         gridData.grabExcessHorizontalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
         return gridData;
+    }
+
+    private class DialogSelectionAdapter extends SelectionAdapter {
+
+        private final int returnValue;
+
+        DialogSelectionAdapter(int returnValue) {
+            this.returnValue = returnValue;
+        }
+
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            okPressed(returnValue);
+        }
     }
 }
