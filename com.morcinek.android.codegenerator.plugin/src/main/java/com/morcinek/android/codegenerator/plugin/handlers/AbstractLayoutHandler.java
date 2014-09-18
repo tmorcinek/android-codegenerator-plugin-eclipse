@@ -1,16 +1,15 @@
 package com.morcinek.android.codegenerator.plugin.handlers;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
-import com.morcinek.android.codegenerator.codegeneration.providers.factories.AdapterResourceProvidersFactory;
 import com.morcinek.android.codegenerator.plugin.Activator;
 import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialogBundle;
 import com.morcinek.android.codegenerator.plugin.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
+import com.morcinek.android.codegenerator.plugin.preference.PreferenceHelper;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PackageHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PathHelper;
-import com.morcinek.android.codegenerator.plugin.preference.PreferenceHelper;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -73,8 +72,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
     }
 
     private String getGeneratedCode(IFile selectedFile) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, CoreException {
-        CodeGenerator codeGenerator = Activator.getDefault().createCodeGenerator(getTemplateName(), new AdapterResourceProvidersFactory());
-        return codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
+        return getCodeGenerator().produceCode(selectedFile.getContents(), selectedFile.getName());
     }
 
     private CodeDialog createCodeDialog(IFile selectedFile, Shell shell, String producedCode) {
@@ -85,7 +83,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         return new CodeDialog(shell, bundle);
     }
 
-    protected abstract String getTemplateName();
+    protected abstract CodeGenerator getCodeGenerator();
 
     protected abstract String getResourceName();
 }
