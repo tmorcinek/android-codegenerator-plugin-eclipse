@@ -4,7 +4,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -18,13 +17,13 @@ import java.io.InputStream;
  */
 public class EnvironmentHelper {
 
-    public IWorkbenchWindow getActiveWindow(ExecutionEvent executionEvent) throws ExecutionException {
-        return HandlerUtil.getActiveWorkbenchWindowChecked(executionEvent);
-    }
-
     public IFile getSelectedFile(ExecutionEvent executionEvent) {
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(executionEvent);
         return (IFile) selection.getFirstElement();
+    }
+
+    public IWorkbenchWindow getActiveWindow(ExecutionEvent executionEvent) throws ExecutionException {
+        return HandlerUtil.getActiveWorkbenchWindowChecked(executionEvent);
     }
 
     public IFile createFileWithGeneratedCode(IFile selectedFile, String javaFileName, String folderPath, String finalCode) throws CoreException {
@@ -33,10 +32,6 @@ public class EnvironmentHelper {
         IFile iFile = folder.getFile(javaFileName);
         iFile.create(getInputStreamFromString(finalCode), false, null);
         return iFile;
-    }
-
-    public InputStream getFileContentWithPath(IProject project, String filePath) throws CoreException {
-        return project.getFile(filePath).getContents();
     }
 
     private InputStream getInputStreamFromString(String code) {

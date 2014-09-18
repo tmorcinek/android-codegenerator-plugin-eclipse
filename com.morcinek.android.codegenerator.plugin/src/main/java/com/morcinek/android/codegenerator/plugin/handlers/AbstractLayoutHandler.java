@@ -8,7 +8,7 @@ import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialogBundle;
 import com.morcinek.android.codegenerator.plugin.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
-import com.morcinek.android.codegenerator.plugin.utils.PackageNameHelper;
+import com.morcinek.android.codegenerator.plugin.utils.PackageHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PathHelper;
 import com.morcinek.android.codegenerator.plugin.utils.PreferencesHelper;
 import org.eclipse.core.commands.AbstractHandler;
@@ -35,7 +35,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
 
     private final EnvironmentHelper environmentHelper = new EnvironmentHelper();
 
-    private final PackageNameHelper packageNameHelper = new PackageNameHelper();
+    private final PackageHelper packageHelper = new PackageHelper();
 
     private final PathHelper pathHelper = new PathHelper();
 
@@ -49,17 +49,20 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
             CodeDialog dialog = createCodeDialog(selectedFile, window.getShell(), getGeneratedCode(selectedFile));
             if (dialog.open() == IStatus.OK) {
                 CodeDialogBundle bundle = dialog.getBundle();
-                preferencesHelper.setSourcePath(bundle.getSourcePath());
+
                 String finalCode = pathHelper.getMergedCodeWithPackage(bundle.getPackage(), bundle.getCode());
-                String fileName = pathHelper.getFileName(selectedFile.getName(), getResourceName());
-                String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
                 switch (dialog.getReturnValue()) {
                     case CodeDialog.RETURN_VALUE_CREATE_FILE:
+                        String fileName = pathHelper.getFileName(selectedFile.getName(), getResourceName());
+                        String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
                         IFile generatedFile = environmentHelper.createFileWithGeneratedCode(selectedFile, fileName, folderName, finalCode);
                         IDE.openEditor(window.getActivePage(), generatedFile, true);
                         break;
                     case CodeDialog.RETURN_VALUE_COPY:
                         ClipboardHelper.copy(finalCode);
+                        break;
+                    default:
+                        preferencesHelper.setSourcePath(bundle.getSourcePath());
                         break;
                 }
             }
@@ -77,7 +80,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
     private CodeDialog createCodeDialog(IFile selectedFile, Shell shell, String producedCode) {
         CodeDialogBundle bundle = new CodeDialogBundle();
         bundle.setCode(producedCode);
-        bundle.setPackage(packageNameHelper.getPackageName(selectedFile));
+        bundle.setPackage(packageHelper.getPackageName(selectedFile));
         bundle.setSourcePath(preferencesHelper.getSourcePath());
         return new CodeDialog(shell, bundle);
     }
