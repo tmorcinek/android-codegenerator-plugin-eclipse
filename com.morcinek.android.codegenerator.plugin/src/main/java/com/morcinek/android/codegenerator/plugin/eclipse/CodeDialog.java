@@ -50,7 +50,7 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private String getTextValue(Text text) {
         if (text != null) {
-            return text.getText();
+            return text.getText().trim();
         }
         return null;
     }
