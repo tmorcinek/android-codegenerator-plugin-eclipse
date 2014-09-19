@@ -19,4 +19,4 @@ Export-Package: com.morcinek.android.codegenerator.plugin
 Bundle-ClassPath: .,
  libs/guava-18.0.jar,
  libs/commons-lang3-3.3.2.jar,
- libs/codegenerator-library-1.0.3.jar
+ libs/android-codegenerator-library-1.0.3.jar
