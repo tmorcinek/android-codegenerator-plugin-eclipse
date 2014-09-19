@@ -4,10 +4,12 @@ import com.morcinek.android.codegenerator.CodeGenerator;
 import com.morcinek.android.codegenerator.codegeneration.TemplateCodeGenerator;
 import com.morcinek.android.codegenerator.codegeneration.providers.ResourceProvidersFactory;
 import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTemplatesProvider;
+import com.morcinek.android.codegenerator.codegeneration.templates.TemplatesProvider;
 import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
 import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
 import com.morcinek.android.codegenerator.plugin.preference.PreferenceHelper;
 import com.morcinek.android.codegenerator.plugin.preference.PreferenceTemplateProvider;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -16,8 +18,10 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-    // The plug-in ID
-    public static final String PLUGIN_ID = "com.morcinek.android.codegenerator.plugin";
+    public static final String SOURCE_PATH_PREFERENCE = "directoryPreference";
+    public static final String ACTIVITY_TEMPLATE_PREFERENCE = "Activity_template";
+    public static final String ADAPTER_TEMPLATE_PREFERENCE = "Adapter_template";
+    public static final String MENU_TEMPLATE_PREFERENCE = "Menu_template";
 
     private static Activator plugin;
 
@@ -27,6 +31,7 @@ public class Activator extends AbstractUIPlugin {
 
     public void start(BundleContext context) throws Exception {
         super.start(context);
+        initializePreferenceDefaults(getPreferenceStore());
         plugin = this;
     }
 
@@ -43,5 +48,17 @@ public class Activator extends AbstractUIPlugin {
         return new CodeGenerator(XMLResourceExtractor.createResourceExtractor(),
                 new FileNameExtractor(),
                 new TemplateCodeGenerator(templateName, resourceProvidersFactory, new PreferenceTemplateProvider()));
+    }
+
+    private void initializePreferenceDefaults(IPreferenceStore preferenceStore) {
+        preferenceStore.setDefault(SOURCE_PATH_PREFERENCE, "src");
+        ResourceTemplatesProvider templatesProvider = new ResourceTemplatesProvider();
+        setDefaultTemplate(preferenceStore, ACTIVITY_TEMPLATE_PREFERENCE, templatesProvider);
+        setDefaultTemplate(preferenceStore, ADAPTER_TEMPLATE_PREFERENCE, templatesProvider);
+        setDefaultTemplate(preferenceStore, MENU_TEMPLATE_PREFERENCE, templatesProvider);
+    }
+
+    private void setDefaultTemplate(IPreferenceStore preferenceStore, String templateName, TemplatesProvider templatesProvider) {
+        preferenceStore.setDefault(templateName, templatesProvider.provideTemplateForName(templateName));
     }
 }

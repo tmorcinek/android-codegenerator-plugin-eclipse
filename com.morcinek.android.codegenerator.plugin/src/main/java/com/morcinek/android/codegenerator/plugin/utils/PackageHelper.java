@@ -24,7 +24,6 @@ public class PackageHelper {
                     return packageExtractor.extractPackageFromManifestStream(file.getContents());
                 }
             }
-
         } catch (Exception e) {
         }
         return "";

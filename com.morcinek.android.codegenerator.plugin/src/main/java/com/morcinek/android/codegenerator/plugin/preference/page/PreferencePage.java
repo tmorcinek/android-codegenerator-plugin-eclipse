@@ -13,26 +13,18 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  */
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-    public static final String SOURCE_PATH_PREFERENCE = "directoryPreference";
-
     public PreferencePage() {
         super(GRID);
     }
 
     @Override
     public void init(IWorkbench iWorkbench) {
+        setPreferenceStore(Activator.getDefault().getPreferenceStore());
         setDescription("General plugin settings:");
-        IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-        setPreferenceStore(preferenceStore);
-        setupDefaults(preferenceStore);
-    }
-
-    private void setupDefaults(IPreferenceStore preferenceStore) {
-        preferenceStore.setDefault(SOURCE_PATH_PREFERENCE, "src");
     }
 
     @Override
     public void createFieldEditors() {
-        addField(new StringFieldEditor(SOURCE_PATH_PREFERENCE, "&Directory:", getFieldEditorParent()));
+        addField(new StringFieldEditor(Activator.SOURCE_PATH_PREFERENCE, "&Directory:", getFieldEditorParent()));
     }
 }

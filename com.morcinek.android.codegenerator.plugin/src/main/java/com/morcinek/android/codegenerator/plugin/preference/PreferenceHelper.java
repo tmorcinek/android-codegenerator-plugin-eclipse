@@ -1,6 +1,6 @@
 package com.morcinek.android.codegenerator.plugin.preference;
 
-import com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage;
+import com.morcinek.android.codegenerator.plugin.Activator;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
@@ -15,11 +15,11 @@ public class PreferenceHelper {
     }
 
     public void setSourcePath(String value) {
-        preferenceStore.setValue(PreferencePage.SOURCE_PATH_PREFERENCE, value);
+        preferenceStore.setValue(Activator.SOURCE_PATH_PREFERENCE, value);
     }
 
     public String getSourcePath() {
-        return preferenceStore.getString(PreferencePage.SOURCE_PATH_PREFERENCE);
+        return preferenceStore.getString(Activator.SOURCE_PATH_PREFERENCE);
     }
 
     public boolean containsTemplate(String templateName) {

@@ -1,15 +1,16 @@
 package com.morcinek.android.codegenerator.plugin.preference.page;
 
+import com.morcinek.android.codegenerator.plugin.Activator;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 
 
 /**
  * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
-public class AdapterTemplatePage extends AbstractTemplatePage {
-
-    private static final String ADAPTER_TEMPLATE_PREFERENCE = "Adapter_template";
+public class AdapterTemplatePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
     public AdapterTemplatePage() {
         super(GRID);
@@ -17,13 +18,12 @@ public class AdapterTemplatePage extends AbstractTemplatePage {
 
     @Override
     public void init(IWorkbench iWorkbench) {
-        super.init(iWorkbench);
+        setPreferenceStore(Activator.getDefault().getPreferenceStore());
         setDescription("Setup Template for Adapter code generation:");
-        setupDefault(ADAPTER_TEMPLATE_PREFERENCE);
     }
 
     @Override
     public void createFieldEditors() {
-        addField(new StringFieldEditor(ADAPTER_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
+        addField(new StringFieldEditor(Activator.ADAPTER_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
     }
 }
