@@ -21,6 +21,7 @@ public class Activator extends AbstractUIPlugin {
     public static final String SOURCE_PATH_PREFERENCE = "directoryPreference";
     public static final String ACTIVITY_TEMPLATE_PREFERENCE = "Activity_template";
     public static final String ADAPTER_TEMPLATE_PREFERENCE = "Adapter_template";
+    public static final String FRAGMENT_TEMPLATE_PREFERENCE = "Fragment_template";
     public static final String MENU_TEMPLATE_PREFERENCE = "Menu_template";
 
     private static Activator plugin;
@@ -55,6 +56,7 @@ public class Activator extends AbstractUIPlugin {
         ResourceTemplatesProvider templatesProvider = new ResourceTemplatesProvider();
         setDefaultTemplate(preferenceStore, ACTIVITY_TEMPLATE_PREFERENCE, templatesProvider);
         setDefaultTemplate(preferenceStore, ADAPTER_TEMPLATE_PREFERENCE, templatesProvider);
+        setDefaultTemplate(preferenceStore, FRAGMENT_TEMPLATE_PREFERENCE, templatesProvider);
         setDefaultTemplate(preferenceStore, MENU_TEMPLATE_PREFERENCE, templatesProvider);
     }
 

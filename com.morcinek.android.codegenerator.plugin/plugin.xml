@@ -47,6 +47,28 @@
                         </and>
                     </visibleWhen>
                 </command>
+                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
+                         label="Fragment"
+                         style="push">
+                    <visibleWhen
+                            checkEnabled="false">
+                        <and>
+                            <count value="1"/>
+                            <with
+                                    variable="activeMenuSelection">
+                                <iterate
+                                        ifEmpty="false">
+                                    <adapt type="org.eclipse.core.resources.IFile">
+                                        <test property="org.eclipse.core.resources.name"
+                                              value="*.xml"/>
+                                        <test property="org.eclipse.core.resources.path"
+                                              value="*layout*"/>
+                                    </adapt>
+                                </iterate>
+                            </with>
+                        </and>
+                    </visibleWhen>
+                </command>
                 <command commandId="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
                          label="Menu"
                          style="push">
@@ -88,6 +110,13 @@
     </extension>
 
     <extension point="org.eclipse.ui.commands">
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
+                 id="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
+                 name="FragmentHandler">
+        </command>
+    </extension>
+
+    <extension point="org.eclipse.ui.commands">
         <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
                  id="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
                  name="MenuHandler">
@@ -109,6 +138,11 @@
                 id="com.morcinek.android.codegenerator.plugin.preference.page.AdapterTemplatePage"
                 name="Adapter Template"
                 class="com.morcinek.android.codegenerator.plugin.preference.page.AdapterTemplatePage"
+                category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+        <page
+                id="com.morcinek.android.codegenerator.plugin.preference.page.FragmentTemplatePage"
+                name="Fragment Template"
+                class="com.morcinek.android.codegenerator.plugin.preference.page.FragmentTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.preference.page.MenuTemplatePage"
