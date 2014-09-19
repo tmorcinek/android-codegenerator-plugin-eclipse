@@ -77,6 +77,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
 
     private CodeDialog createCodeDialog(IFile selectedFile, Shell shell, String producedCode) {
         CodeDialogBundle bundle = new CodeDialogBundle();
+        bundle.setResourceName(selectedFile.getName());
         bundle.setCode(producedCode);
         bundle.setPackage(packageHelper.getPackageName(selectedFile));
         bundle.setSourcePath(preferenceHelper.getSourcePath());
