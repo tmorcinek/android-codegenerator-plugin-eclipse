@@ -46,9 +46,20 @@ This way I created the first version in 2011. In 2014 I decided to basically rew
 <li>library (<a href="https://github.com/tmorcinek/android-codegenerator-library">https://github.com/tmorcinek/android-codegenerator-library</a>)</li>
 <li>main project - this one, which contains reference to library project, and all Plugin Development Environment related code.</li>
 </ul><h3>
+<a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h3>
+
+<p>All versions of the plugin will be generated in <strong>github</strong> repo under:
+<a href="https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/tree/master/plugins">https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/tree/master/plugins</a></p>
+
+<h3>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h3>
+
+<p>Copy downloaded <strong>jar</strong> file to path <strong>eclipse/plugins</strong> directory.</p>
+
+<h3>
 <a name="how-does-it-work" class="anchor" href="#how-does-it-work"><span class="octicon octicon-link"></span></a>How does it work</h3>
 
-<p>Basically, plugin is retrieving from xml files data about all the views that contain <strong>android:id</strong> attribute. It collects informations about view's type and id. </p>
+<p>Plugin is retrieving from xml files, data about all the views that contain <strong>android:id</strong> attribute. It collects informations about view's type and id. </p>
 
 <pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -75,7 +86,7 @@ This way I created the first version in 2011. In 2014 I decided to basically rew
 &lt;/LinearLayout&gt;
 </code></pre>
 
-<p>Just by analyzing this xml layout file, all code is generated. Plugin works also with menu XML files. </p>
+<p>Based on the <em>type of object</em> and <em>id</em> plugin generates fields, assignment, imports and methods.</p>
 
 <h3>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
