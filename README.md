@@ -3,7 +3,13 @@ Eclipse Plugin for Android code generation
 
 Plugin for generation of Android code from XML files (layouts, menus).
  
-For more informations please see [the website](http://tmorcinek.github.io/android-codegenerator-plugin-eclipse/)
+For more information please see [the website](http://tmorcinek.github.io/android-codegenerator-plugin-eclipse/)
+
+Download
+-------
+
+All available versions of plugin are [here](https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/tree/master/plugins)
+
 
 License
 -------
