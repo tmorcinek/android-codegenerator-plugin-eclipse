@@ -14,7 +14,7 @@ All available versions of plugin are in [releases](https://github.com/tmorcinek/
 
 Installation
 -------
-You can download jar file from [releases](https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/releases) and copy it into:  
+You can download jar file from [latest release](https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/releases/latest), and copy it into:  
 `eclipse/plugins` 
 
 
