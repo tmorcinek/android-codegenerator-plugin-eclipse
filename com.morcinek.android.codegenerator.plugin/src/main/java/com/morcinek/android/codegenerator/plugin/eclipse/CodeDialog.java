@@ -44,8 +44,8 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private void saveInput() {
         bundle.setPackage(getTextValue(packageText));
-        bundle.setCode(getTextValue(codeText));
         bundle.setSourcePath(getTextValue(sourcePathText));
+        bundle.setCode(getTextValue(codeText));
     }
 
     private String getTextValue(Text text) {
@@ -71,13 +71,13 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
         Composite gridComposite = createGridComposite(area);
         if (bundle.getSourcePath() != null) {
-            sourcePathText = createTextSection(gridComposite, "Java Source Path", bundle.getSourcePath());
+            sourcePathText = createTextSection(gridComposite, "Source Path", bundle.getSourcePath());
         }
         if (bundle.getPackage() != null) {
             packageText = createTextSection(gridComposite, "Package", bundle.getPackage());
         }
 
-        codeText = createText(area, bundle.getCode());
+        codeText = createText(area, bundle.getCode(), SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 
         createButtons(createGridComposite(area));
         return area;
@@ -102,11 +102,15 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         button.addSelectionListener(listener);
     }
 
-    private Text createText(Composite container, String defaultText) {
-        Text text = new Text(container, SWT.BORDER);
+    private Text createText(Composite container, String defaultText, int style) {
+        Text text = new Text(container, SWT.BORDER | style);
         text.setLayoutData(getGridData());
         text.setText(defaultText);
         return text;
+    }
+
+    private Text createText(Composite container, String defaultText) {
+        return createText(container, defaultText, 0);
     }
 
     private Composite createGridComposite(Composite area) {
