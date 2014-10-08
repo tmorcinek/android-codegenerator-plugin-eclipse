@@ -2,7 +2,6 @@ package com.morcinek.android.codegenerator.plugin.preference.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -25,6 +24,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
     @Override
     public void createFieldEditors() {
-        addField(new StringFieldEditor(Activator.SOURCE_PATH_PREFERENCE, "&Directory:", getFieldEditorParent()));
+        addField(new StringFieldEditor(Activator.SOURCE_PATH_PREFERENCE, "&Source Path:", getFieldEditorParent()));
     }
 }

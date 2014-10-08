@@ -1,8 +1,8 @@
 package com.morcinek.android.codegenerator.plugin.preference.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
+import org.eclipse.cldt.managedbuilder.ui.properties.MultiLineTextFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -24,6 +24,6 @@ public class AdapterTemplatePage extends FieldEditorPreferencePage implements IW
 
     @Override
     public void createFieldEditors() {
-        addField(new StringFieldEditor(Activator.ADAPTER_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
+        addField(new MultiLineTextFieldEditor(Activator.ADAPTER_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
     }
 }
