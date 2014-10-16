@@ -81,5 +81,11 @@
             <version>3.3.0-I20070620</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.ui</groupId>
+            <artifactId>editors</artifactId>
+            <version>3.3.0-v20070606-0010</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

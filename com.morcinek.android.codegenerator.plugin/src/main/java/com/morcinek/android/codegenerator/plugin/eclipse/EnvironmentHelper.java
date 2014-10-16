@@ -6,8 +6,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -32,6 +35,16 @@ public class EnvironmentHelper {
         IFile iFile = folder.getFile(javaFileName);
         iFile.create(getInputStreamFromString(finalCode), false, null);
         return iFile;
+    }
+
+    public IWorkbenchWindow getActiveWindow(IWorkbenchPart workbenchPart) {
+        return workbenchPart.getSite().getWorkbenchWindow();
+    }
+
+    public IFile getFileFromEditor(IWorkbenchPart workbenchPart) {
+        ITextEditor textEditor = (ITextEditor) workbenchPart;
+        IFileEditorInput fileEditorInput = (IFileEditorInput) textEditor.getEditorInput();
+        return fileEditorInput.getFile();
     }
 
     private InputStream getInputStreamFromString(String code) {

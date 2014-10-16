@@ -94,6 +94,32 @@
             </menu>
         </menuContribution>
     </extension>
+    <extension
+            point="org.eclipse.ui.popupMenus">
+        <objectContribution
+                objectClass="org.eclipse.ui.IEditorInput"
+                nameFilter="*.xml"
+                id="CodeGeneratorPopupMenu.contribution">
+            <menu
+                    label="Generate Android Code"
+                    path="additions"
+                    id="CodeGeneratorPopupMenu.menu">
+                <separator
+                        name="group">
+                </separator>
+            </menu>
+            <action
+                    id="com.morcinek.android.codegenerator.plugin.actions.MenuAction"
+                    label="Menu"
+                    class="com.morcinek.android.codegenerator.plugin.actions.MenuAction"
+                    menubarPath="CodeGeneratorPopupMenu.menu/group"
+                    enablesFor="1">
+                <enablement>
+                    <objectState name="path" value="*menu*"/>
+                </enablement>
+            </action>
+        </objectContribution>
+    </extension>
 
     <extension point="org.eclipse.ui.commands">
         <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"

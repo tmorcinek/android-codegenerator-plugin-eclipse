@@ -7,14 +7,16 @@ Bundle-Activator: com.morcinek.android.codegenerator.plugin.Activator
 Bundle-Vendor: MORCINEK
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.core.expressions
+ org.eclipse.core.expressions,
+ org.eclipse.ui.editors
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-LazyStart: true
 Import-Package: 
+ org.eclipse.core.filesystem,
  org.eclipse.core.internal.resources,
  org.eclipse.core.resources,
- org.eclipse.ui.ide,
- org.eclipse.core.filesystem
+ org.eclipse.ui,
+ org.eclipse.ui.ide
 Export-Package: com.morcinek.android.codegenerator.plugin
 Bundle-ClassPath: .,
  libs/guava-18.0.jar,
