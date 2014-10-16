@@ -29,12 +29,18 @@ public class EnvironmentHelper {
         return HandlerUtil.getActiveWorkbenchWindowChecked(executionEvent);
     }
 
-    public IFile createFileWithGeneratedCode(IFile selectedFile, String javaFileName, String folderPath, String finalCode) throws CoreException {
+    public IFile getNewFile(IFile selectedFile, String javaFileName, String folderPath) throws CoreException {
         IFolder folder = selectedFile.getProject().getFolder(folderPath);
         createIfNotExist(folder);
-        IFile iFile = folder.getFile(javaFileName);
-        iFile.create(getInputStreamFromString(finalCode), false, null);
-        return iFile;
+        return folder.getFile(javaFileName);
+    }
+
+    public void createFileWithGeneratedCode(IFile newFile, String finalCode) throws CoreException {
+        newFile.create(getInputStreamFromString(finalCode), false, null);
+    }
+
+    public void overrideFileWithGeneratedCode(IFile newFile, String finalCode) throws CoreException {
+        newFile.setContents(getInputStreamFromString(finalCode), true, true, null);
     }
 
     public IWorkbenchWindow getActiveWindow(IWorkbenchPart workbenchPart) {

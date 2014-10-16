@@ -5,6 +5,7 @@ import com.morcinek.android.codegenerator.plugin.Activator;
 import com.morcinek.android.codegenerator.plugin.general.action.ActionHandler;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.CodeDialogBundle;
+import com.morcinek.android.codegenerator.plugin.general.eclipse.DialogFactory;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.general.preference.PreferenceHelper;
 import com.morcinek.android.codegenerator.plugin.general.utils.ClipboardHelper;
@@ -26,7 +27,7 @@ import java.io.IOException;
 /**
  * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
-public class LayoutActionHandler implements ActionHandler{
+public class LayoutActionHandler implements ActionHandler {
 
     private final ErrorHandler errorHandler = new ErrorHandler();
 
@@ -50,28 +51,46 @@ public class LayoutActionHandler implements ActionHandler{
     @Override
     public void handleAction(IFile selectedFile, IWorkbenchWindow window) {
         try {
-            CodeDialog dialog = createCodeDialog(selectedFile, window.getShell(), getGeneratedCode(selectedFile));
-            if (dialog.open() == IStatus.OK) {
-                CodeDialogBundle bundle = dialog.getBundle();
-
-                String finalCode = pathHelper.getMergedCodeWithPackage(bundle.getPackage(), bundle.getCode());
-                switch (dialog.getReturnValue()) {
-                    case CodeDialog.RETURN_VALUE_CREATE_FILE:
-                        String fileName = pathHelper.getFileName(selectedFile.getName(), resourceName);
-                        String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
-                        IFile generatedFile = environmentHelper.createFileWithGeneratedCode(selectedFile, fileName, folderName, finalCode);
-                        IDE.openEditor(window.getActivePage(), generatedFile, true);
-                        break;
-                    case CodeDialog.RETURN_VALUE_COPY:
-                        ClipboardHelper.copy(finalCode);
-                        break;
-                    default:
-                        preferenceHelper.setSourcePath(bundle.getSourcePath());
-                        break;
-                }
-            }
+            showCodeDialog(selectedFile, window);
         } catch (Exception exception) {
             errorHandler.handleError(exception);
+        }
+    }
+
+    private void showCodeDialog(IFile selectedFile, IWorkbenchWindow window) throws Exception {
+        CodeDialog dialog = createCodeDialog(selectedFile, window.getShell(), getGeneratedCode(selectedFile));
+        if (dialog.open() == IStatus.OK) {
+            CodeDialogBundle bundle = dialog.getBundle();
+
+            String finalCode = pathHelper.getMergedCodeWithPackage(bundle.getPackage(), bundle.getCode());
+            switch (dialog.getReturnValue()) {
+                case CodeDialog.RETURN_VALUE_CREATE_FILE:
+                    String fileName = pathHelper.getFileName(selectedFile.getName(), resourceName);
+                    createFileWithGeneratedCode(selectedFile, window, bundle, finalCode, fileName);
+                    break;
+                case CodeDialog.RETURN_VALUE_COPY:
+                    ClipboardHelper.copy(finalCode);
+                    break;
+                default:
+                    preferenceHelper.setSourcePath(bundle.getSourcePath());
+                    break;
+            }
+        }
+    }
+
+    private void createFileWithGeneratedCode(IFile selectedFile, IWorkbenchWindow window, CodeDialogBundle bundle, String finalCode, String fileName) throws Exception {
+        String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
+        IFile newFile = environmentHelper.getNewFile(selectedFile, fileName, folderName);
+        if (!newFile.exists()) {
+            environmentHelper.createFileWithGeneratedCode(newFile, finalCode);
+            IDE.openEditor(window.getActivePage(), newFile, true);
+        } else {
+            if (DialogFactory.openFileExistsDialog(window.getShell(), folderName, fileName) == IStatus.OK) {
+                environmentHelper.overrideFileWithGeneratedCode(newFile, finalCode);
+                IDE.openEditor(window.getActivePage(), newFile, true);
+            } else {
+                showCodeDialog(selectedFile, window);
+            }
         }
     }
 
