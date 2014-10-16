@@ -55,6 +55,10 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         return null;
     }
 
+    protected boolean isResizable() {
+        return true;
+    }
+
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
@@ -77,7 +81,7 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
             packageText = createTextSection(gridComposite, "Package", bundle.getPackage());
         }
 
-        codeText = createText(area, bundle.getCode(), SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        codeText = createText(area, bundle.getCode(), SWT.MULTI | SWT.WRAP | SWT.V_SCROLL, new GridData(SWT.FILL, SWT.FILL, true, true));
 
         createButtons(createGridComposite(area));
         return area;
@@ -92,30 +96,30 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
 
     private Text createTextSection(Composite container, String label, String defaultText) {
         createLabel(container, label);
-        return createText(container, defaultText);
+        return createFormText(container, defaultText);
     }
 
     private void createButton(Composite gridComposite, String text, SelectionAdapter listener) {
         Button button = new Button(gridComposite, SWT.BORDER);
-        button.setLayoutData(getGridData());
+        button.setLayoutData(getDefaultGridData());
         button.setText(text);
         button.addSelectionListener(listener);
     }
 
-    private Text createText(Composite container, String defaultText, int style) {
+    private Text createText(Composite container, String defaultText, int style, GridData gridData) {
         Text text = new Text(container, SWT.BORDER | style);
-        text.setLayoutData(getGridData());
+        text.setLayoutData(gridData);
         text.setText(defaultText);
         return text;
     }
 
-    private Text createText(Composite container, String defaultText) {
-        return createText(container, defaultText, 0);
+    private Text createFormText(Composite container, String defaultText) {
+        return createText(container, defaultText, SWT.NONE, getDefaultGridData());
     }
 
     private Composite createGridComposite(Composite area) {
         Composite container = new Composite(area, SWT.NONE);
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        container.setLayoutData(getDefaultGridData());
         container.setLayout(new GridLayout(2, false));
         return container;
     }
@@ -124,11 +128,8 @@ public class CodeDialog extends org.eclipse.jface.dialogs.Dialog {
         new Label(container, SWT.NONE).setText(text);
     }
 
-    private GridData getGridData() {
-        GridData gridData = new GridData();
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        return gridData;
+    private GridData getDefaultGridData() {
+        return new GridData(GridData.FILL, GridData.GRAB_VERTICAL, true, false);
     }
 
     private class DialogSelectionAdapter extends SelectionAdapter {
