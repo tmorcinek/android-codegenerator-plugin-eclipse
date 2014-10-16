@@ -69,7 +69,7 @@
                         </and>
                     </visibleWhen>
                 </command>
-                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
+                <command commandId="com.morcinek.android.codegenerator.plugin.menu.handler.MenuHandler"
                          label="Menu"
                          style="push">
                     <visibleWhen
@@ -109,9 +109,9 @@
                 </separator>
             </menu>
             <action
-                    id="com.morcinek.android.codegenerator.plugin.actions.MenuAction"
+                    id="com.morcinek.android.codegenerator.plugin.menu.action.MenuAction"
                     label="Menu"
-                    class="com.morcinek.android.codegenerator.plugin.actions.MenuAction"
+                    class="com.morcinek.android.codegenerator.plugin.menu.action.MenuAction"
                     menubarPath="CodeGeneratorPopupMenu.menu/group"
                     enablesFor="1">
                 <enablement>
@@ -143,8 +143,8 @@
     </extension>
 
     <extension point="org.eclipse.ui.commands">
-        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
-                 id="com.morcinek.android.codegenerator.plugin.handlers.MenuHandler"
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.menu.handler.MenuHandler"
+                 id="com.morcinek.android.codegenerator.plugin.menu.handler.MenuHandler"
                  name="MenuHandler">
         </command>
     </extension>
@@ -171,9 +171,9 @@
                 class="com.morcinek.android.codegenerator.plugin.preference.page.FragmentTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
-                id="com.morcinek.android.codegenerator.plugin.preference.page.MenuTemplatePage"
+                id="com.morcinek.android.codegenerator.plugin.menu.page.MenuTemplatePage"
                 name="Menu Template"
-                class="com.morcinek.android.codegenerator.plugin.preference.page.MenuTemplatePage"
+                class="com.morcinek.android.codegenerator.plugin.menu.page.MenuTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
     </extension>
 </plugin>

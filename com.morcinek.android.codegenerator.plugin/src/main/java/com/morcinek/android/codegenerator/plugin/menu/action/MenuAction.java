@@ -1,6 +1,7 @@
-package com.morcinek.android.codegenerator.plugin.actions;
+package com.morcinek.android.codegenerator.plugin.menu.action;
 
-import com.morcinek.android.codegenerator.plugin.controllers.MenuActionController;
+import com.morcinek.android.codegenerator.plugin.general.ActionHandler;
+import com.morcinek.android.codegenerator.plugin.menu.MenuActionHandler;
 import com.morcinek.android.codegenerator.plugin.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;
 import org.eclipse.core.resources.IFile;
@@ -19,13 +20,9 @@ public class MenuAction implements IObjectActionDelegate {
 
     private final EnvironmentHelper environmentHelper = new EnvironmentHelper();
 
-    private final MenuActionController actionController = new MenuActionController();
+    private final ActionHandler actionController = new MenuActionHandler();
 
     private IWorkbenchPart workbenchPart;
-
-    public MenuAction() {
-        System.out.println("created");
-    }
 
     @Override
     public void setActivePart(IAction iAction, IWorkbenchPart iWorkbenchPart) {

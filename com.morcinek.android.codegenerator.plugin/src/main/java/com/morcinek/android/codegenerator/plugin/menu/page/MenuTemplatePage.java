@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.preference.page;
+package com.morcinek.android.codegenerator.plugin.menu.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
 import org.eclipse.cldt.managedbuilder.ui.properties.MultiLineTextFieldEditor;
