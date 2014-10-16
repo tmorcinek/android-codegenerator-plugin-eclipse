@@ -18,6 +18,36 @@ You can download jar file from [latest release](https://github.com/tmorcinek/and
 `eclipse/plugins` 
 
 
+Change notes
+-------
+
+<h3>Version 2.0.2</h3>
+<ul>
+    <li>ISSUE #20: “Create File" should ask for alternative filename</li>
+    <li>ISSUE #5: Action in Editors Context Menu.</li>
+    <li>ISSUE #19: Templates not properly shown in Preference Template views.</li>
+</ul>
+
+<h3>Version 2.0.1</h3>
+<ul>
+    <li>ISSUE #15: Null value in CodeDialog title.</li>
+    <li>ISSUE #14: Initialize preferences defaults in Activator.</li>
+    <li>Automatization of building process.</li>
+</ul>
+
+<h3>Version 2.0.0</h3>
+<ul>
+    <li>generating Activity Class code from layout</li>
+    <li>generating Fragment Class code from layout</li>
+    <li>generating Adapter Class code from item layout</li>
+    <li>generating Menu code from menu xml</li>
+    <li>creating files from code</li>
+    <li>preview screen with generated code that can be modified before creation of file</li>
+    <li>detection of project package</li>
+    <li>preference page with editable templates for generated code, template for each: Activity, Fragment, Adapter, Menu</li>
+</ul>
+
+
 License
 -------
 
