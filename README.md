@@ -6,10 +6,12 @@ Plugin for generation of Android code from XML files (layouts, menus).
 For more information please see [the website](http://tmorcinek.github.io/android-codegenerator-plugin-eclipse/).
 
 
+
 Download
 -------
 
 All available versions of plugin are in [releases](https://github.com/tmorcinek/android-codegenerator-plugin-eclipse/releases).
+
 
 
 Installation
@@ -18,24 +20,25 @@ You can download jar file from [latest release](https://github.com/tmorcinek/and
 `eclipse/plugins` 
 
 
+
 Change notes
 -------
 
-<h3>Version 2.0.2</h3>
+<h3>Version 2.0.3</h3>
 <ul>
     <li>ISSUE #20: “Create File" should ask for alternative filename</li>
     <li>ISSUE #5: Action in Editors Context Menu.</li>
     <li>ISSUE #19: Templates not properly shown in Preference Template views.</li>
 </ul>
 
-<h3>Version 2.0.1</h3>
+<h3>Version 2.0.2</h3>
 <ul>
     <li>ISSUE #15: Null value in CodeDialog title.</li>
     <li>ISSUE #14: Initialize preferences defaults in Activator.</li>
     <li>Automatization of building process.</li>
 </ul>
 
-<h3>Version 2.0.0</h3>
+<h3>Version 2.0.1</h3>
 <ul>
     <li>generating Activity Class code from layout</li>
     <li>generating Fragment Class code from layout</li>
@@ -46,6 +49,7 @@ Change notes
     <li>detection of project package</li>
     <li>preference page with editable templates for generated code, template for each: Activity, Fragment, Adapter, Menu</li>
 </ul>
+
 
 
 License
