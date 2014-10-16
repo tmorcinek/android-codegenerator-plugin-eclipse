@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.utils;
+package com.morcinek.android.codegenerator.plugin.general.utils;
 
 import com.google.common.collect.Lists;
 import com.morcinek.android.codegenerator.extractor.PackageExtractor;

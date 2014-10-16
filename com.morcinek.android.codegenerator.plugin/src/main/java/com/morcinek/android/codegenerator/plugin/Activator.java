@@ -7,8 +7,8 @@ import com.morcinek.android.codegenerator.codegeneration.templates.ResourceTempl
 import com.morcinek.android.codegenerator.codegeneration.templates.TemplatesProvider;
 import com.morcinek.android.codegenerator.extractor.XMLResourceExtractor;
 import com.morcinek.android.codegenerator.extractor.string.FileNameExtractor;
-import com.morcinek.android.codegenerator.plugin.preference.PreferenceHelper;
-import com.morcinek.android.codegenerator.plugin.preference.PreferenceTemplateProvider;
+import com.morcinek.android.codegenerator.plugin.general.preference.PreferenceHelper;
+import com.morcinek.android.codegenerator.plugin.general.preference.PreferenceTemplateProvider;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

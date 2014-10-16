@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.utils;
+package com.morcinek.android.codegenerator.plugin.general.utils;
 
 import com.morcinek.android.codegenerator.codegeneration.builders.file.ClassNameBuilder;
 import com.morcinek.android.codegenerator.codegeneration.builders.file.PackageBuilder;

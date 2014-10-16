@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.preference.page;
+package com.morcinek.android.codegenerator.plugin.general.preference.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;

@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.eclipse;
+package com.morcinek.android.codegenerator.plugin.general.eclipse;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

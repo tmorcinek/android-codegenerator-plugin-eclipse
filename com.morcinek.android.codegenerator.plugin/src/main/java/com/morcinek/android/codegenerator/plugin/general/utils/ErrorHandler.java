@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.error;
+package com.morcinek.android.codegenerator.plugin.general.utils;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;

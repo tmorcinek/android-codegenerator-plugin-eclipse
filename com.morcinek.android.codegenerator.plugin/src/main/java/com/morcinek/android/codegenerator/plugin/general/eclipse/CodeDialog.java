@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.eclipse;
+package com.morcinek.android.codegenerator.plugin.general.eclipse;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

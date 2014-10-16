@@ -152,28 +152,28 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-                id="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"
+                id="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"
                 name="Android Code Generator"
-                class="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+                class="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.layouts.activity.page.ActivityTemplatePage"
                 name="Activity Template"
                 class="com.morcinek.android.codegenerator.plugin.layouts.activity.page.ActivityTemplatePage"
-                category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+                category="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.layouts.adapter.page.AdapterTemplatePage"
                 name="Adapter Template"
                 class="com.morcinek.android.codegenerator.plugin.layouts.adapter.page.AdapterTemplatePage"
-                category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+                category="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.layouts.fragment.page.FragmentTemplatePage"
                 name="Fragment Template"
                 class="com.morcinek.android.codegenerator.plugin.layouts.fragment.page.FragmentTemplatePage"
-                category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+                category="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.menu.page.MenuTemplatePage"
                 name="Menu Template"
                 class="com.morcinek.android.codegenerator.plugin.menu.page.MenuTemplatePage"
-                category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
+                category="com.morcinek.android.codegenerator.plugin.general.preference.page.PreferencePage"/>
     </extension>
 </plugin>

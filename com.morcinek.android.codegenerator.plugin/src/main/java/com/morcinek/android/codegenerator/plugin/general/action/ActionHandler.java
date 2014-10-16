@@ -14,5 +14,5 @@ import java.io.IOException;
  */
 public interface ActionHandler {
 
-    void handleAction(IFile file, IWorkbenchWindow window) throws ParserConfigurationException, CoreException, SAXException, XPathExpressionException, IOException;
+    void handleAction(IFile file, IWorkbenchWindow window);
 }

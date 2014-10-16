@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.utils;
+package com.morcinek.android.codegenerator.plugin.general.utils;
 
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
