@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.general;
+package com.morcinek.android.codegenerator.plugin.general.action;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;

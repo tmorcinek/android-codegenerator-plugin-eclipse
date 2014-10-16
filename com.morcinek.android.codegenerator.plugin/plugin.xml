@@ -3,7 +3,7 @@
     <extension point="org.eclipse.ui.menus">
         <menuContribution locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
             <menu label="Generate Android Code">
-                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
+                <command commandId="com.morcinek.android.codegenerator.plugin.layouts.activity.handler.ActivityHandler"
                          label="Activity"
                          style="push">
                     <visibleWhen
@@ -25,7 +25,7 @@
                         </and>
                     </visibleWhen>
                 </command>
-                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
+                <command commandId="com.morcinek.android.codegenerator.plugin.layouts.adapter.handlers.AdapterHandler"
                          label="Adapter"
                          style="push">
                     <visibleWhen
@@ -47,7 +47,7 @@
                         </and>
                     </visibleWhen>
                 </command>
-                <command commandId="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
+                <command commandId="com.morcinek.android.codegenerator.plugin.layouts.fragment.handlers.FragmentHandler"
                          label="Fragment"
                          style="push">
                     <visibleWhen
@@ -122,22 +122,22 @@
     </extension>
 
     <extension point="org.eclipse.ui.commands">
-        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
-                 id="com.morcinek.android.codegenerator.plugin.handlers.ActivityHandler"
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.layouts.activity.handler.ActivityHandler"
+                 id="com.morcinek.android.codegenerator.plugin.layouts.activity.handler.ActivityHandler"
                  name="ActivityHandler">
         </command>
     </extension>
 
     <extension point="org.eclipse.ui.commands">
-        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
-                 id="com.morcinek.android.codegenerator.plugin.handlers.AdapterHandler"
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.layouts.adapter.handlers.AdapterHandler"
+                 id="com.morcinek.android.codegenerator.plugin.layouts.adapter.handlers.AdapterHandler"
                  name="AdapterHandler">
         </command>
     </extension>
 
     <extension point="org.eclipse.ui.commands">
-        <command defaultHandler="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
-                 id="com.morcinek.android.codegenerator.plugin.handlers.FragmentHandler"
+        <command defaultHandler="com.morcinek.android.codegenerator.plugin.layouts.fragment.handlers.FragmentHandler"
+                 id="com.morcinek.android.codegenerator.plugin.layouts.fragment.handlers.FragmentHandler"
                  name="FragmentHandler">
         </command>
     </extension>
@@ -156,19 +156,19 @@
                 name="Android Code Generator"
                 class="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
-                id="com.morcinek.android.codegenerator.plugin.preference.page.ActivityTemplatePage"
+                id="com.morcinek.android.codegenerator.plugin.layouts.activity.page.ActivityTemplatePage"
                 name="Activity Template"
-                class="com.morcinek.android.codegenerator.plugin.preference.page.ActivityTemplatePage"
+                class="com.morcinek.android.codegenerator.plugin.layouts.activity.page.ActivityTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
-                id="com.morcinek.android.codegenerator.plugin.preference.page.AdapterTemplatePage"
+                id="com.morcinek.android.codegenerator.plugin.layouts.adapter.page.AdapterTemplatePage"
                 name="Adapter Template"
-                class="com.morcinek.android.codegenerator.plugin.preference.page.AdapterTemplatePage"
+                class="com.morcinek.android.codegenerator.plugin.layouts.adapter.page.AdapterTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
-                id="com.morcinek.android.codegenerator.plugin.preference.page.FragmentTemplatePage"
+                id="com.morcinek.android.codegenerator.plugin.layouts.fragment.page.FragmentTemplatePage"
                 name="Fragment Template"
-                class="com.morcinek.android.codegenerator.plugin.preference.page.FragmentTemplatePage"
+                class="com.morcinek.android.codegenerator.plugin.layouts.fragment.page.FragmentTemplatePage"
                 category="com.morcinek.android.codegenerator.plugin.preference.page.PreferencePage"/>
         <page
                 id="com.morcinek.android.codegenerator.plugin.menu.page.MenuTemplatePage"

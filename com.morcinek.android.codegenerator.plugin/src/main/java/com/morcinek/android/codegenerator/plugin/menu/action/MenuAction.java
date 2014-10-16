@@ -1,6 +1,6 @@
 package com.morcinek.android.codegenerator.plugin.menu.action;
 
-import com.morcinek.android.codegenerator.plugin.general.ActionHandler;
+import com.morcinek.android.codegenerator.plugin.general.action.ActionHandler;
 import com.morcinek.android.codegenerator.plugin.menu.MenuActionHandler;
 import com.morcinek.android.codegenerator.plugin.eclipse.EnvironmentHelper;
 import com.morcinek.android.codegenerator.plugin.error.ErrorHandler;

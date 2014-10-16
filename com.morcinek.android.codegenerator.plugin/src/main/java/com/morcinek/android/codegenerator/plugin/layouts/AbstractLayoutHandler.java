@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.handlers;
+package com.morcinek.android.codegenerator.plugin.layouts;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
 import com.morcinek.android.codegenerator.plugin.Activator;

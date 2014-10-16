@@ -1,4 +1,4 @@
-package com.morcinek.android.codegenerator.plugin.preference.page;
+package com.morcinek.android.codegenerator.plugin.layouts.adapter.page;
 
 import com.morcinek.android.codegenerator.plugin.Activator;
 import org.eclipse.cldt.managedbuilder.ui.properties.MultiLineTextFieldEditor;
@@ -10,20 +10,20 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 /**
  * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
-public class FragmentTemplatePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class AdapterTemplatePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-    public FragmentTemplatePage() {
+    public AdapterTemplatePage() {
         super(GRID);
     }
 
     @Override
     public void init(IWorkbench iWorkbench) {
         setPreferenceStore(Activator.getDefault().getPreferenceStore());
-        setDescription("Setup Template for Fragment code generation:");
+        setDescription("Setup Template for Adapter code generation:");
     }
 
     @Override
     public void createFieldEditors() {
-        addField(new MultiLineTextFieldEditor(Activator.FRAGMENT_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
+        addField(new MultiLineTextFieldEditor(Activator.ADAPTER_TEMPLATE_PREFERENCE, "", getFieldEditorParent()));
     }
 }

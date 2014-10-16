@@ -5,7 +5,7 @@ import com.morcinek.android.codegenerator.codegeneration.providers.factories.Men
 import com.morcinek.android.codegenerator.plugin.Activator;
 import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.eclipse.CodeDialogBundle;
-import com.morcinek.android.codegenerator.plugin.general.ActionHandler;
+import com.morcinek.android.codegenerator.plugin.general.action.ActionHandler;
 import com.morcinek.android.codegenerator.plugin.utils.ClipboardHelper;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
