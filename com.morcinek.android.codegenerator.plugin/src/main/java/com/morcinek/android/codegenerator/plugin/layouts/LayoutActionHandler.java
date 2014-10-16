@@ -1,18 +1,16 @@
-package com.morcinek.android.codegenerator.plugin.layouts.handler;
+package com.morcinek.android.codegenerator.plugin.layouts;
 
 import com.morcinek.android.codegenerator.CodeGenerator;
 import com.morcinek.android.codegenerator.plugin.Activator;
+import com.morcinek.android.codegenerator.plugin.general.action.ActionHandler;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.CodeDialog;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.CodeDialogBundle;
 import com.morcinek.android.codegenerator.plugin.general.eclipse.EnvironmentHelper;
-import com.morcinek.android.codegenerator.plugin.general.utils.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.general.preference.PreferenceHelper;
 import com.morcinek.android.codegenerator.plugin.general.utils.ClipboardHelper;
+import com.morcinek.android.codegenerator.plugin.general.utils.ErrorHandler;
 import com.morcinek.android.codegenerator.plugin.general.utils.PackageHelper;
 import com.morcinek.android.codegenerator.plugin.general.utils.PathHelper;
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -28,7 +26,7 @@ import java.io.IOException;
 /**
  * Copyright 2014 Tomasz Morcinek. All rights reserved.
  */
-public abstract class AbstractLayoutHandler extends AbstractHandler {
+public class LayoutActionHandler implements ActionHandler{
 
     private final ErrorHandler errorHandler = new ErrorHandler();
 
@@ -40,10 +38,17 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
 
     private final PreferenceHelper preferenceHelper = Activator.getDefault().createPreferenceHelper();
 
+    private CodeGenerator codeGenerator;
+
+    private String resourceName;
+
+    public LayoutActionHandler(CodeGenerator codeGenerator, String resourceName) {
+        this.codeGenerator = codeGenerator;
+        this.resourceName = resourceName;
+    }
+
     @Override
-    public Object execute(ExecutionEvent executionEvent) throws ExecutionException {
-        final IFile selectedFile = environmentHelper.getSelectedFile(executionEvent);
-        final IWorkbenchWindow window = environmentHelper.getActiveWindow(executionEvent);
+    public void handleAction(IFile selectedFile, IWorkbenchWindow window) {
         try {
             CodeDialog dialog = createCodeDialog(selectedFile, window.getShell(), getGeneratedCode(selectedFile));
             if (dialog.open() == IStatus.OK) {
@@ -52,7 +57,7 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
                 String finalCode = pathHelper.getMergedCodeWithPackage(bundle.getPackage(), bundle.getCode());
                 switch (dialog.getReturnValue()) {
                     case CodeDialog.RETURN_VALUE_CREATE_FILE:
-                        String fileName = pathHelper.getFileName(selectedFile.getName(), getResourceName());
+                        String fileName = pathHelper.getFileName(selectedFile.getName(), resourceName);
                         String folderName = pathHelper.getFolderPath(bundle.getSourcePath(), bundle.getPackage());
                         IFile generatedFile = environmentHelper.createFileWithGeneratedCode(selectedFile, fileName, folderName, finalCode);
                         IDE.openEditor(window.getActivePage(), generatedFile, true);
@@ -68,11 +73,10 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         } catch (Exception exception) {
             errorHandler.handleError(exception);
         }
-        return null;
     }
 
     private String getGeneratedCode(IFile selectedFile) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, CoreException {
-        return getCodeGenerator().produceCode(selectedFile.getContents(), selectedFile.getName());
+        return codeGenerator.produceCode(selectedFile.getContents(), selectedFile.getName());
     }
 
     private CodeDialog createCodeDialog(IFile selectedFile, Shell shell, String producedCode) {
@@ -83,8 +87,4 @@ public abstract class AbstractLayoutHandler extends AbstractHandler {
         bundle.setSourcePath(preferenceHelper.getSourcePath());
         return new CodeDialog(shell, bundle);
     }
-
-    protected abstract CodeGenerator getCodeGenerator();
-
-    protected abstract String getResourceName();
 }

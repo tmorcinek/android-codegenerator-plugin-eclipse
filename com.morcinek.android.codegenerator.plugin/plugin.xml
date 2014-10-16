@@ -94,29 +94,57 @@
             </menu>
         </menuContribution>
     </extension>
-    <extension
-            point="org.eclipse.ui.popupMenus">
-        <objectContribution
-                objectClass="org.eclipse.ui.IEditorInput"
-                nameFilter="*.xml"
-                id="CodeGeneratorPopupMenu.contribution">
-            <menu
-                    label="Generate Android Code"
-                    path="additions"
-                    id="CodeGeneratorPopupMenu.menu">
-                <separator
-                        name="group">
-                </separator>
+
+    <extension point="org.eclipse.ui.popupMenus">
+        <objectContribution objectClass="org.eclipse.ui.IEditorInput"
+                            nameFilter="*.xml"
+                            id="MenuGeneratorPopupMenu.contribution">
+            <visibility>
+                <objectState name="path" value="*menu*"/>
+            </visibility>
+            <menu label="Generate Android Code"
+                  path="additions"
+                  id="MenuGeneratorPopupMenu.menu">
+                <separator name="group"/>
             </menu>
-            <action
-                    id="com.morcinek.android.codegenerator.plugin.menu.action.MenuAction"
+            <action id="com.morcinek.android.codegenerator.plugin.menu.action.MenuAction"
                     label="Menu"
                     class="com.morcinek.android.codegenerator.plugin.menu.action.MenuAction"
-                    menubarPath="CodeGeneratorPopupMenu.menu/group"
+                    menubarPath="MenuGeneratorPopupMenu.menu/group"
                     enablesFor="1">
-                <enablement>
-                    <objectState name="path" value="*menu*"/>
-                </enablement>
+            </action>
+        </objectContribution>
+    </extension>
+
+    <extension point="org.eclipse.ui.popupMenus">
+        <objectContribution objectClass="org.eclipse.ui.IEditorInput"
+                            nameFilter="*.xml"
+                            id="LayoutGeneratorPopupMenu.contribution">
+            <visibility>
+                <objectState name="path" value="*layout*"/>
+            </visibility>
+            <menu label="Generate Android Code"
+                  path="additions"
+                  id="LayoutGeneratorPopupMenu.menu">
+                <separator name="group"/>
+            </menu>
+            <action id="com.morcinek.android.codegenerator.plugin.layouts.activity.action.ActivityAction"
+                    label="Activity"
+                    class="com.morcinek.android.codegenerator.plugin.layouts.activity.action.ActivityAction"
+                    menubarPath="LayoutGeneratorPopupMenu.menu/group"
+                    enablesFor="1">
+            </action>
+            <action id="com.morcinek.android.codegenerator.plugin.layouts.adapter.action.AdapterAction"
+                    label="Adapter"
+                    class="com.morcinek.android.codegenerator.plugin.layouts.adapter.action.AdapterAction"
+                    menubarPath="LayoutGeneratorPopupMenu.menu/group"
+                    enablesFor="1">
+            </action>
+            <action id="com.morcinek.android.codegenerator.plugin.layouts.fragment.action.FragmentAction"
+                    label="Fragment"
+                    class="com.morcinek.android.codegenerator.plugin.layouts.fragment.action.FragmentAction"
+                    menubarPath="LayoutGeneratorPopupMenu.menu/group"
+                    enablesFor="1">
             </action>
         </objectContribution>
     </extension>
