@@ -10,4 +10,4 @@ target
 
 plugins/
 
-
+.DS_Store
